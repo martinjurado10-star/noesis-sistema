@@ -1,0 +1,7 @@
+# Nada con datos de clientes sale de esta máquina (constitución §6).
+# La regla es la carpeta, no el archivo: si nombra un expediente, va en _PRIVADO.
+_PRIVADO/
+
+# Respaldos del registro de Windows: son de esta máquina, no del diseño.
+_estado/
+_respaldo*/
