@@ -1,16 +1,49 @@
 {
-  "_comentario": "Fuente unica del stack. La leen panel.py, instalar.ps1 e inventario.ps1. El por que de cada linea esta en SISTEMA.md.",
-  "revision": "2026-08-17",
+  "_comentario": "Fuente unica del ecosistema completo. La leen panel.py, instalar.ps1 e inventario.ps1. El por que de cada linea esta en SISTEMA.md.",
+  "revision": "2026-08-18",
 
-  "stack": [
-    { "funcion": "Navegador",           "nombre": "Chrome",       "detectar": "Chrome",       "winget": "Google.Chrome" },
-    { "funcion": "Nube de archivos",    "nombre": "Google Drive", "detectar": "Google Drive", "winget": "Google.GoogleDrive" },
-    { "funcion": "Control de versiones","nombre": "Git",          "detectar": "Git",          "winget": "Git.Git" },
-    { "funcion": "Lenguaje principal",  "nombre": "Python 3.12",  "detectar": "Python 3.12",  "winget": "Python.Python.3.12" },
-    { "funcion": "Lenguaje web",        "nombre": "Node.js",      "detectar": "Node",         "winget": "OpenJS.NodeJS" },
-    { "funcion": "Editor de codigo",    "nombre": "Zed",          "detectar": "Zed",          "winget": "ZedIndustries.Zed" },
-    { "funcion": "OCR",                 "nombre": "Tesseract",    "detectar": "Tesseract",    "winget": "UB-Mannheim.TesseractOCR" },
-    { "funcion": "Videollamadas",       "nombre": "Zoom",         "detectar": "Zoom",         "winget": "Zoom.Zoom" }
+  "_sobre_las_tres_listas": "PROGRAMAS se instalan con un comando y se verifican solos. LOCAL son piezas puestas a mano o construidas acá: se verifican por ruta. SERVICIOS viven en la nube: no se instalan ni se verifican, se declaran para que ninguna funcion quede sin dueño.",
+
+  "programas": [
+    { "funcion": "Navegador",            "nombre": "Chrome",        "detectar": "Chrome",       "winget": "Google.Chrome" },
+    { "funcion": "Nube de archivos",     "nombre": "Google Drive",  "detectar": "Google Drive", "winget": "Google.GoogleDrive" },
+    { "funcion": "Control de versiones", "nombre": "Git",           "detectar": "Git",          "winget": "Git.Git" },
+    { "funcion": "Git desde la terminal","nombre": "GitHub CLI",    "detectar": "GitHub CLI",   "winget": "GitHub.cli" },
+    { "funcion": "Lenguaje principal",   "nombre": "Python 3.12",   "detectar": "Python 3.12",  "winget": "Python.Python.3.12" },
+    { "funcion": "Lenguaje web",         "nombre": "Node.js",       "detectar": "Node",         "winget": "OpenJS.NodeJS" },
+    { "funcion": "Editor de codigo",     "nombre": "Zed",           "detectar": "Zed",          "winget": "ZedIndustries.Zed" },
+    { "funcion": "OCR de todos los dias","nombre": "Tesseract",     "detectar": "Tesseract",    "winget": "UB-Mannheim.TesseractOCR" },
+    { "funcion": "Videollamadas",        "nombre": "Zoom",          "detectar": "Zoom",         "winget": "Zoom.Zoom" },
+    { "funcion": "Asistente de IA",      "nombre": "Claude",        "detectar": "Claude",       "winget": "Anthropic.Claude" }
+  ],
+
+  "local": [
+    { "funcion": "PDF complejo (a pedido)", "nombre": "Marker",
+      "ruta": "C:\\Noesis\\99_experimentos\\marker-env\\Scripts\\marker_single.exe",
+      "nota": "Solo cuando la prolijidad de las tablas justifique la espera: ~20 min por pagina sin placa de video. Le falta ficha de adaptador (constitucion §8)." },
+    { "funcion": "Motor de OCR de Marker",  "nombre": "llama-server",
+      "ruta": "C:\\Noesis\\99_experimentos\\llama-cpp\\llama-server.exe",
+      "nota": "Marker no hace OCR sin esto. Se le pasa en LLAMA_CPP_BINARY." },
+    { "funcion": "Castellano del OCR",      "nombre": "spa.traineddata",
+      "ruta": "C:\\Noesis\\10_ingesta\\tessdata\\spa.traineddata",
+      "nota": "Sin esto Tesseract lee como si fuera ingles. Program Files solo trae ingles." },
+    { "funcion": "Papeles a texto",         "nombre": "Ingesta NOESIS",
+      "ruta": "C:\\Noesis\\10_ingesta\\noesis_ingesta.py",
+      "nota": "Pieza propia. Convierte solo, cada 10 min, todo lo que entra." },
+    { "funcion": "Liquidaciones",           "nombre": "Motor liquidar-ar",
+      "ruta": "C:\\Noesis\\01_cerebro\\skills\\liquidar-ar",
+      "nota": "Pieza propia. Nunca calculo mental: el motor es auditable." }
+  ],
+
+  "servicios": [
+    { "funcion": "Correo",              "nombre": "Gmail",            "donde": "mail.google.com" },
+    { "funcion": "Agenda",              "nombre": "Google Calendar",  "donde": "calendar.google.com" },
+    { "funcion": "Documentos",          "nombre": "Google Docs",      "donde": "docs.google.com" },
+    { "funcion": "Planillas",           "nombre": "Google Sheets",    "donde": "sheets.google.com" },
+    { "funcion": "Repositorio remoto",  "nombre": "GitHub",           "donde": "github.com/martinjurado10-star" },
+    { "funcion": "Diseno grafico",      "nombre": "Canva",            "donde": "canva.com" },
+    { "funcion": "Lectura de material", "nombre": "NotebookLM",       "donde": "notebooklm.google.com",
+      "nota": "Lee los .md convertidos, no los PDF originales." }
   ],
 
   "_nota_deteccion": "El registro de Windows deja entradas muertas: un programa desinstalado sigue figurando. Por eso los prohibidos se verifican por RUTA real del programa, no por el registro.",

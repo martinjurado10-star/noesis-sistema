@@ -178,6 +178,7 @@ h1{font-size:30px;margin:0 0 6px;letter-spacing:-.02em}
 .fila:last-child{border-bottom:0}
 .marca{font-weight:700;flex:none;width:18px}
 .marca.si{color:var(--ok)} .marca.no{color:var(--mal)}
+.marca.nube{color:var(--acento);font-size:11px}
 .que{font-weight:600} .porque{color:var(--suave);font-size:13px;margin-left:auto;text-align:right}
 .numeros{display:flex;gap:32px;flex-wrap:wrap;margin-bottom:14px}
 .numero{font-size:38px;font-weight:700;line-height:1;letter-spacing:-.02em}
@@ -193,16 +194,25 @@ code{background:var(--fondo);border:1px solid var(--borde);border-radius:5px;
 
 
 def html(datos):
-    st, pr, hw, ing, pend = (datos[k] for k in ("stack", "prohibidos", "hw", "ingesta", "pendientes"))
-    faltan = [x for x in st if not x["hay"]]
+    st, loc, srv, pr, hw, ing, pend = (
+        datos[k] for k in ("stack", "local", "servicios", "prohibidos", "hw", "ingesta", "pendientes"))
+    faltan = [x for x in st if not x["hay"]] + [x for x in loc if not x["hay"]]
     sobran = [x for x in pr if x["hay"]]
     limpio = not faltan and not sobran
 
-    filas_stack = "".join(
-        f'<div class="fila"><span class="marca {"si" if x["hay"] else "no"}">'
-        f'{"OK" if x["hay"] else "!"}</span>'
+    def filas(items):
+        return "".join(
+            f'<div class="fila"><span class="marca {"si" if x["hay"] else "no"}">'
+            f'{"OK" if x["hay"] else "!"}</span>'
+            f'<span class="que">{x["nombre"]}</span>'
+            f'<span class="porque">{x["funcion"]}</span></div>' for x in items)
+
+    filas_stack = filas(st)
+    filas_local = filas(loc)
+    filas_srv = "".join(
+        f'<div class="fila"><span class="marca nube">&#9679;</span>'
         f'<span class="que">{x["nombre"]}</span>'
-        f'<span class="porque">{x["funcion"]}</span></div>' for x in st)
+        f'<span class="porque">{x["funcion"]}</span></div>' for x in srv)
 
     if sobran:
         filas_proh = "".join(
@@ -245,8 +255,18 @@ def html(datos):
 
   <div class="grilla">
     <div class="tarjeta">
-      <h2>Tu stack &middot; una herramienta por función</h2>
+      <h2>Programas &middot; una herramienta por función</h2>
       {filas_stack}
+    </div>
+
+    <div class="tarjeta">
+      <h2>Piezas propias &middot; puestas a mano, acá adentro</h2>
+      {filas_local}
+    </div>
+
+    <div class="tarjeta">
+      <h2>Servicios &middot; viven en la nube, no se instalan</h2>
+      {filas_srv}
     </div>
 
     <div class="tarjeta">
@@ -297,7 +317,9 @@ def main():
 
     datos = {
         "momento": datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
-        "stack": [{**x, "hay": hay(x["detectar"])} for x in cfg["stack"]],
+        "stack": [{**x, "hay": hay(x["detectar"])} for x in cfg["programas"]],
+        "local": [{**x, "hay": Path(os.path.expandvars(x["ruta"])).exists()} for x in cfg["local"]],
+        "servicios": cfg["servicios"],
         "prohibidos": [{**x, "hay": esta_de_verdad(x, inst)} for x in cfg["prohibidos"]],
         "hw": hardware(),
         "ingesta": ingesta(),
