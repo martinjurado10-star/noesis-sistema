@@ -24,10 +24,20 @@ $ZED = @("$env:LOCALAPPDATA\Programs\Zed\Zed.exe",
 
 $NOTEPAD = "$env:SystemRoot\system32\notepad.exe"
 
-# Que abre que. LibreOffice se agrega solo si esta instalado.
+# Documentos: manda Office si esta; si no, LibreOffice. Nunca los dos:
+# el que gana es el que se declara primero (ver SISTEMA.md, un dueño por funcion).
+$OFF = 'C:\Program Files\Microsoft Office\root\Office16'
+$WORD  = Join-Path $OFF 'WINWORD.EXE'
+$EXCEL = Join-Path $OFF 'EXCEL.EXE'
+$PPT   = Join-Path $OFF 'POWERPNT.EXE'
+
 $LIBRE = @("$env:ProgramFiles\LibreOffice\program\soffice.exe",
            "${env:ProgramFiles(x86)}\LibreOffice\program\soffice.exe"
           ) | Where-Object { Test-Path $_ } | Select-Object -First 1
+
+$DOC  = if (Test-Path $WORD)  { $WORD }  else { $LIBRE }
+$HOJA = if (Test-Path $EXCEL) { $EXCEL } else { $LIBRE }
+$PRES = if (Test-Path $PPT)   { $PPT }   else { $LIBRE }
 
 $reglas = @(
     @{ Ext = '.pdf';  Prog = 'Noesis.pdf';   App = $CHROME;  Nombre = 'Documento PDF' }
@@ -37,13 +47,13 @@ $reglas = @(
     @{ Ext = '.json'; Prog = 'Noesis.code';  App = $ZED;     Nombre = 'JSON' }
     @{ Ext = '.py';   Prog = 'Noesis.code';  App = $ZED;     Nombre = 'Python' }
     @{ Ext = '.html'; Prog = 'Noesis.web';   App = $CHROME;  Nombre = 'Pagina web' }
-    @{ Ext = '.csv';  Prog = 'Noesis.hoja';  App = $LIBRE;   Nombre = 'Planilla CSV' }
-    @{ Ext = '.docx'; Prog = 'Noesis.doc';   App = $LIBRE;   Nombre = 'Documento Word' }
-    @{ Ext = '.doc';  Prog = 'Noesis.doc';   App = $LIBRE;   Nombre = 'Documento Word' }
-    @{ Ext = '.xlsx'; Prog = 'Noesis.hoja';  App = $LIBRE;   Nombre = 'Planilla Excel' }
-    @{ Ext = '.xls';  Prog = 'Noesis.hoja';  App = $LIBRE;   Nombre = 'Planilla Excel' }
-    @{ Ext = '.pptx'; Prog = 'Noesis.pres';  App = $LIBRE;   Nombre = 'Presentacion' }
-    @{ Ext = '.ppt';  Prog = 'Noesis.pres';  App = $LIBRE;   Nombre = 'Presentacion' }
+    @{ Ext = '.csv';  Prog = 'Noesis.hoja';  App = $HOJA;    Nombre = 'Planilla CSV' }
+    @{ Ext = '.docx'; Prog = 'Noesis.doc';   App = $DOC;     Nombre = 'Documento Word' }
+    @{ Ext = '.doc';  Prog = 'Noesis.doc';   App = $DOC;     Nombre = 'Documento Word' }
+    @{ Ext = '.xlsx'; Prog = 'Noesis.hoja';  App = $HOJA;    Nombre = 'Planilla Excel' }
+    @{ Ext = '.xls';  Prog = 'Noesis.hoja';  App = $HOJA;    Nombre = 'Planilla Excel' }
+    @{ Ext = '.pptx'; Prog = 'Noesis.pres';  App = $PRES;    Nombre = 'Presentacion' }
+    @{ Ext = '.ppt';  Prog = 'Noesis.pres';  App = $PRES;    Nombre = 'Presentacion' }
 )
 
 if ($Ver) {
