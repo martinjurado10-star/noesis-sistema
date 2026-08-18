@@ -199,6 +199,15 @@ sin subir el documento a ningún sitio web.
 
 ---
 
+> **Deuda de nombre — `99_experimentos`.** El nombre miente: ahí no hay experimentos,
+> viven los motores pesados y son pieza estructural (están declarados en `stack.json`).
+> No se renombra todavía porque el entorno de Python que tiene adentro guarda rutas
+> absolutas: cambiarle el nombre a la carpeta rompe Marker y obliga a reinstalarlo, que
+> son varios gigas de descarga. **Se renombra el día que haya que tocar Marker por otro
+> motivo**, así la descarga no es un costo extra. Decidido el 2026-08-18.
+
+---
+
 ## Dónde se hace cada cosa
 
 | Superficie | Alcance | Para qué |
@@ -227,7 +236,7 @@ Y al revés: redactar un escrito sobre un expediente es de Cowork, no de acá.
 | `C:\Noesis\_contexto` | perfil de MJM y manual de uso |
 | `C:\Noesis\01_cerebro` | las skills, versionadas en git |
 | `C:\Noesis\10_ingesta` | la conversión automática a Markdown |
-| `C:\Noesis\99_experimentos` | banco de pruebas — nada estructural vive acá |
+| `C:\Noesis\99_experimentos` | **los motores pesados**: Marker, `llama-server`, el entorno de Python |
 | `G:\Mi unidad` | los papeles: casos, contable, personal |
 
 ---
