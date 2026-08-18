@@ -104,6 +104,23 @@ página**; Tesseract hizo la misma en **5,4 segundos**.
 Regla que sale de ahí: **antes de proponer una herramienta con modelos, preguntarse si
 pide placa de video.** Si la pide, no va.
 
+### Motores medidos en esta máquina (2026-08-18)
+
+Ninguno se adopta por lo que promete el folleto. Se mide contra material real de MJM:
+
+| Motor | Qué pasó | Veredicto |
+|---|---|---|
+| **Extracción directa** (pdftext, mammoth, openpyxl) | PDF de 1 pág en **1,2 s** · XLSX en **0,1 s** | **es el motor de todos los días** |
+| **Tesseract** + castellano | una página escaneada en **5,4 s** | **el OCR de todos los días** |
+| **faster-whisper** (small) | **31 min de audio en 4 min 27 s** — 7× más rápido que escucharlo | **adoptado**: los audios son prueba |
+| **Pandoc** | sin modelos, instantáneo | adoptado para HTML, RTF, ODT, EPUB |
+| **Marker** | **más de 14 min** con un PDF de **una** página, sin OCR | solo a pedido, con `--marker` |
+| **Docling** | **falló las dos veces**, incluso apagándole los modelos: pide un compilador C++ que Windows no trae. 209 s y 171 s para terminar en error | **descartado** |
+
+Sobre Docling: para usarlo habría que instalar las herramientas de compilación de Visual
+Studio (varios GB) y ni así hay garantía sin placa de video. Se deja instalado, no se
+borra: comparte librerías con Marker y desinstalarlo lo rompería.
+
 ---
 
 ## El stack, por función
