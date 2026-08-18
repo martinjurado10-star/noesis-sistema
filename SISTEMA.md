@@ -264,6 +264,12 @@ que pide autorización en el navegador.
 
 ## Pendientes
 
+- **`C:\Noesis\10_ingesta` no está en ningún repositorio.** Es la carpeta con las piezas
+  propias —el motor de ingesta, el consolidador para NotebookLM, el castellano del OCR—,
+  justo las que no se pueden volver a bajar de ningún lado. Hay que versionarla. Decisión
+  abierta: repo propio, o mover el repo un nivel arriba (`C:\Noesis`) para que abarque
+  `00_sistema` y `10_ingesta`, que son las dos de Capa 3.
+
 - **Cuatro carpetas de trabajo duplicadas** entre `C:\Users\M01\Desktop` y
   `G:\...\01_Casos_Activos`, con distinta cantidad de archivos y distinta fecha en cada
   lado. Cotejar una por una, empezando por la más chica. El detalle con nombres está
