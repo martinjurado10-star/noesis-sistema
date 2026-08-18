@@ -1,0 +1,36 @@
+{
+  "_comentario": "Fuente unica del stack. La leen panel.py, instalar.ps1 e inventario.ps1. El por que de cada linea esta en SISTEMA.md.",
+  "revision": "2026-08-17",
+
+  "stack": [
+    { "funcion": "Navegador",           "nombre": "Chrome",       "detectar": "Chrome",       "winget": "Google.Chrome" },
+    { "funcion": "Nube de archivos",    "nombre": "Google Drive", "detectar": "Google Drive", "winget": "Google.GoogleDrive" },
+    { "funcion": "Control de versiones","nombre": "Git",          "detectar": "Git",          "winget": "Git.Git" },
+    { "funcion": "Lenguaje principal",  "nombre": "Python 3.12",  "detectar": "Python 3.12",  "winget": "Python.Python.3.12" },
+    { "funcion": "Lenguaje web",        "nombre": "Node.js",      "detectar": "Node",         "winget": "OpenJS.NodeJS" },
+    { "funcion": "Editor de codigo",    "nombre": "Zed",          "detectar": "Zed",          "winget": "ZedIndustries.Zed" },
+    { "funcion": "OCR",                 "nombre": "Tesseract",    "detectar": "Tesseract",    "winget": "UB-Mannheim.TesseractOCR" },
+    { "funcion": "Videollamadas",       "nombre": "Zoom",         "detectar": "Zoom",         "winget": "Zoom.Zoom" }
+  ],
+
+  "_nota_deteccion": "El registro de Windows deja entradas muertas: un programa desinstalado sigue figurando. Por eso los prohibidos se verifican por RUTA real del programa, no por el registro.",
+
+  "prohibidos": [
+    { "nombre": "Microsoft 365",        "motivo": "capa de documentos: la cubre Google Docs",
+      "ruta": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE" },
+    { "nombre": "OneDrive",             "motivo": "capa de documentos: la cubre Google Drive",
+      "ruta": "%LOCALAPPDATA%\\Microsoft\\OneDrive\\OneDrive.exe" },
+    { "nombre": "Copilot",              "motivo": "duplica a Claude",
+      "comprobar": "appx", "detectar": "Copilot" },
+    { "nombre": "Adobe Creative Cloud", "motivo": "app suelta por tarea",
+      "ruta": "C:\\Program Files\\Adobe\\Adobe Creative Cloud" },
+    { "nombre": "Notion",               "motivo": "duplica notas con Google Docs",
+      "ruta": "%LOCALAPPDATA%\\Programs\\Notion" },
+    { "nombre": "TeamViewer",           "motivo": "sin uso; acceso remoto abierto",
+      "ruta": "C:\\Program Files\\TeamViewer\\TeamViewer.exe" },
+    { "nombre": "Python 3.14",          "motivo": "segundo interprete",
+      "ruta": "%LOCALAPPDATA%\\Programs\\Python\\Python314" },
+    { "nombre": "Linux (WSL)",          "motivo": "segundo sistema",
+      "comprobar": "wsl" }
+  ]
+}

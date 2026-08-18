@@ -5,3 +5,6 @@ _PRIVADO/
 # Respaldos del registro de Windows: son de esta máquina, no del diseño.
 _estado/
 _respaldo*/
+
+# El panel se regenera solo: no se versiona el resultado, si el generador.
+panel.html
