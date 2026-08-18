@@ -41,9 +41,7 @@
     { "funcion": "Material para NotebookLM", "nombre": "para_notebooklm",
       "ruta": "C:\\Noesis\\10_ingesta\\para_notebooklm.py",
       "nota": "Une los .md en uno solo. El limite de NotebookLM no es el tamaño (500.000 palabras por fuente) sino la cantidad: 50 fuentes por notebook. Comprimir en zip no sirve: no descomprime." },
-    { "funcion": "Liquidaciones",           "nombre": "Motor liquidar-ar",
-      "ruta": "C:\\Noesis\\01_cerebro\\skills\\liquidar-ar",
-      "nota": "Pieza propia. Nunca calculo mental: el motor es auditable." }
+    { "_nota_capas": "Aca NO van las skills juridicas (liquidar-ar, concursos-ar, revision-contratos-ar). Son Capa 2 -dominio-, viven en 01_cerebro y tienen su propio repo. Declararlas aca mezclaria capas y les daria un segundo dueño." }
   ],
 
   "servicios": [

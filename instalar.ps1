@@ -43,6 +43,7 @@ foreach ($h in $cfg.programas) {
 # Las piezas propias no se instalan con un comando: si faltan, se avisa.
 $rotas = @()
 foreach ($p in $cfg.local) {
+    if (-not $p.ruta) { continue }   # entradas de nota, sin ruta
     if (-not (Test-Path ([Environment]::ExpandEnvironmentVariables($p.ruta)))) { $rotas += $p }
 }
 if ($rotas) {

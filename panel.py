@@ -358,7 +358,8 @@ def main():
     datos = {
         "momento": datetime.datetime.now().strftime("%d/%m/%Y %H:%M"),
         "stack": [{**x, "hay": hay(x["detectar"])} for x in cfg["programas"]],
-        "local": [{**x, "hay": Path(os.path.expandvars(x["ruta"])).exists()} for x in cfg["local"]],
+        "local": [{**x, "hay": Path(os.path.expandvars(x["ruta"])).exists()}
+                  for x in cfg["local"] if x.get("ruta")],
         "servicios": cfg["servicios"],
         "prohibidos": [{**x, "hay": esta_de_verdad(x, inst)} for x in cfg["prohibidos"]],
         "hw": hardware(),

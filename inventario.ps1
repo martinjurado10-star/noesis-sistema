@@ -43,6 +43,7 @@ foreach ($e in $cfg.programas) {
 Write-Host ""
 Write-Host "=== Piezas propias (no salen de ningun instalador) ===" -ForegroundColor Cyan
 foreach ($p in $cfg.local) {
+    if (-not $p.ruta) { continue }   # entradas de nota, sin ruta
     if (Test-Path ([Environment]::ExpandEnvironmentVariables($p.ruta))) {
         Write-Host ("  ok      {0,-22} {1}" -f $p.funcion, $p.nombre) -ForegroundColor DarkGray
     } else {
