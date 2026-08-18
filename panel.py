@@ -187,6 +187,16 @@ h1{font-size:30px;margin:0 0 6px;letter-spacing:-.02em}
   border-radius:10px;padding:13px 16px;font-size:14px;margin-top:14px}
 ul.pend{margin:0;padding-left:20px} ul.pend li{margin-bottom:11px;font-size:14.5px}
 .ancho{grid-column:1/-1}
+.flujo{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+.paso{flex:1 1 190px;display:flex;gap:11px;align-items:flex-start;
+  background:var(--fondo);border:1px solid var(--borde);border-radius:10px;padding:14px}
+.paso.destacado{border-color:var(--acento);border-width:2px}
+.paso-n{flex:none;width:23px;height:23px;border-radius:50%;background:var(--acento);
+  color:var(--tarjeta);font-size:12px;font-weight:700;display:flex;
+  align-items:center;justify-content:center}
+.ruta{color:var(--suave);font-size:12.5px;line-height:1.45}
+.flecha{align-self:center;color:var(--suave);font-size:19px}
+@media(max-width:760px){.flecha{display:none}}
 footer{margin-top:32px;color:var(--suave);font-size:13px;text-align:center}
 code{background:var(--fondo);border:1px solid var(--borde);border-radius:5px;
   padding:2px 6px;font-size:13px}
@@ -292,6 +302,36 @@ def html(datos):
       <div class="fila"><span class="que">Memoria</span><span class="porque">{hw.get('ram','?')} GB</span></div>
       <div class="fila"><span class="que">Video</span><span class="porque">{hw.get('gpu','?')}</span></div>
       {aviso_gpu}
+    </div>
+
+    <div class="tarjeta ancho">
+      <h2>El flujo &middot; de dónde entra y a dónde va</h2>
+      <div class="flujo">
+        <div class="paso">
+          <div class="paso-n">1</div>
+          <div><b>Entra</b><br><span class="ruta">Descargas · Escritorio · Documentos<br>G:\Mi unidad (todo el Drive)</span></div>
+        </div>
+        <div class="flecha">&rarr;</div>
+        <div class="paso">
+          <div class="paso-n">2</div>
+          <div><b>Se convierte solo</b><br><span class="ruta">cada 10 minutos<br>PDF, Word, Excel, fotos, ZIP</span></div>
+        </div>
+        <div class="flecha">&rarr;</div>
+        <div class="paso">
+          <div class="paso-n">3</div>
+          <div><b>Queda el texto</b><br><span class="ruta">en <code>_md</code>, al lado del papel<br>lo de Descargas, en el depósito</span></div>
+        </div>
+        <div class="flecha">&rarr;</div>
+        <div class="paso destacado">
+          <div class="paso-n">4</div>
+          <div><b>PREPARAR PARA IA</b><br><span class="ruta">un clic en el Escritorio:<br>arma UN archivo y abre la carpeta</span></div>
+        </div>
+      </div>
+      <div class="nota" style="background:var(--ok-f);color:var(--ok);border-color:var(--ok)">
+        <b>Para subir a NotebookLM o a un proyecto:</b> el archivo que termina en
+        <code>__para_notebooklm.md</code> — es todo junto, con índice.
+        NotebookLM admite 50 fuentes por notebook, así que conviene uno solo y no 45 sueltos.
+      </div>
     </div>
 
     <div class="tarjeta ancho">
