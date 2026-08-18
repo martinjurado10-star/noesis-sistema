@@ -79,6 +79,20 @@ Paso "OneDrive" {
     }
 }
 
+# ---------- 2b. Que OneDrive no vuelva nunca mas ----------
+# Desinstalarlo no alcanza: Windows y Office lo reinstalan solos.
+# Esta politica lo deja inutilizable aunque alguien lo instale.
+Paso "Blindar contra OneDrive (que no vuelva nunca mas)" {
+    $k = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\OneDrive'
+    New-Item -Path $k -Force | Out-Null
+    Set-ItemProperty -Path $k -Name 'DisableFileSyncNGSC'   -Value 1 -Type DWord
+    Set-ItemProperty -Path $k -Name 'DisableFileSync'       -Value 1 -Type DWord
+    Set-ItemProperty -Path $k -Name 'DisableMeteredNetworkFileSync' -Value 1 -Type DWord
+    # Y que no se meta en el arranque
+    Remove-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run' `
+                        -Name 'OneDriveSetup' -ErrorAction SilentlyContinue
+}
+
 # ---------- 3. Adobe Creative Cloud ----------
 # Adobe se resucita solo: una tarea programada relanza CCXProcess y hay
 # un servicio de actualizacion. Hay que desarmar eso ANTES de desinstalar,
