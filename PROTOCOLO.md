@@ -63,6 +63,25 @@ Al terminar la sesión, Claude informa tokens y plata. El medidor es
 Nombre, expediente o matrícula → `_PRIVADO/` o skill con prefijo `caso-`. Se
 verifica **antes** de commitear, no después.
 
+## 8. Versionado no es respaldado
+
+Un repo sin remoto **no es un respaldo**: es una carpeta con historial, y se muere
+con el disco. Tener commits da una sensación de seguridad que no es real.
+
+**Por qué está escrita.** El 2026-08-18 se encontró `10_ingesta` con seis commits
+y sin remoto, mientras `SISTEMA.md` la daba por "no versionada". Las dos mitades
+estaban mal: sí estaba versionada, y no estaba a salvo. Justo la carpeta con las
+piezas que no se vuelven a bajar de ningún lado.
+
+El chequeo de los cuatro repos, en una línea:
+
+```bash
+for d in 00_nucleo 00_sistema 01_cerebro 10_ingesta; do cd "/c/Noesis/$d" && echo "$d: $(git remote | head -1 || echo SIN-REMOTO) $(git status -sb | head -1)"; done
+```
+
+Sirve al cerrar una sesión que tocó código. Lo que se busca es `SIN-REMOTO` o
+`ahead`: son las dos formas de tener trabajo que existe en un solo lugar.
+
 ---
 
 ## Reglas técnicas ganadas a golpes
@@ -76,7 +95,14 @@ verifica **antes** de commitear, no después.
   Windows rompe los acentos en el camino.
 - **Un script de administrador, uno solo.** `acomodar_sistema.ps1`.
 - **Verificar contra el estado real, no contra el registro.** El registro de
-  Windows deja entradas muertas: dieron dos falsas alarmas.
+  Windows deja entradas muertas: dieron dos falsas alarmas. Y `SISTEMA.md` dio una
+  tercera el 2026-08-18: el pendiente decía una cosa y el disco decía otra.
+- **Un cartel en pantalla no es un paso.** GitHub ofrece instalar Copilot al crear
+  un repo; no hace falta para nada y está en la tabla de Prohibidos. Lo que aparece
+  sugiriendo instalar algo se contrasta contra esa tabla antes de tocarlo.
+- **La credencial la pone MJM.** Claude no se autentica en cuentas ajenas ni con
+  autorización expresa. Cuando algo pide una llave, Claude deja todo preparado
+  hasta la puerta y da el camino más corto — el clic es de MJM.
 
 ---
 
@@ -87,4 +113,4 @@ sesión que hubo que rehacer. No se agregan buenas intenciones. Formato: qué se
 hace, y abajo **por qué** — el por qué es lo que evita que alguien la deshaga
 dentro de seis meses.
 
-_Última regla sumada: 2026-08-18._
+_Última regla sumada: 2026-08-18 (regla 8: versionado no es respaldado)._

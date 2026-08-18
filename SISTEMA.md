@@ -291,6 +291,7 @@ Start-Process powershell -Verb RunAs -ArgumentList '-ExecutionPolicy','Bypass','
 | 2026-08-17 | Fuera con administrador: **Microsoft 365, OneDrive, Notion** | la regla |
 | 2026-08-17 | Zed como editor | hacía falta editor; VS Code es Microsoft |
 | 2026-08-17 | Fuera también: Notion y TeamViewer | duplicaba notas / acceso remoto sin uso |
+| 2026-08-18 | `10_ingesta` con repo propio (`noesis-ingesta`) | un repo por componente: un solo dueño, y `C:\Noesis` tiene adentro enlaces a papeles de clientes |
 
 ---
 
@@ -347,11 +348,11 @@ OCR no se comio nada.
 
 ## Pendientes
 
-- **`C:\Noesis\10_ingesta` no está en ningún repositorio.** Es la carpeta con las piezas
-  propias —el motor de ingesta, el consolidador para NotebookLM, el castellano del OCR—,
-  justo las que no se pueden volver a bajar de ningún lado. Hay que versionarla. Decisión
-  abierta: repo propio, o mover el repo un nivel arriba (`C:\Noesis`) para que abarque
-  `00_sistema` y `10_ingesta`, que son las dos de Capa 3.
+- ~~`C:\Noesis\10_ingesta` no está en ningún repositorio~~ — **resuelto el 2026-08-18.**
+  Tiene repo propio y privado: `noesis-ingesta`. La decisión abierta se cerró por repo
+  propio y no por mover el repo un nivel arriba, porque `C:\Noesis` contiene los enlaces
+  `_biblioteca` y `_contexto` que apuntan a papeles de clientes en Drive, más otros tres
+  repos adentro: un repo ahí arriba ponía el anonimato a un descuido de distancia.
 
 - **Cuatro carpetas de trabajo duplicadas** entre `C:\Users\M01\Desktop` y
   `G:\...\01_Casos_Activos`, con distinta cantidad de archivos y distinta fecha en cada
