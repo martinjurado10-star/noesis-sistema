@@ -23,7 +23,10 @@ function Esta-De-Verdad($item) {
     if ($item.ruta) { return Test-Path ([Environment]::ExpandEnvironmentVariables($item.ruta)) }
     switch ($item.comprobar) {
         'appx' { return [bool](Get-AppxPackage -Name "*$($item.detectar)*" -ErrorAction SilentlyContinue) }
-        'wsl'  { return [bool]((wsl.exe --list --quiet 2>$null) -replace "`0","").Trim() }
+        'wsl'  {
+            $d = @(wsl.exe --list --quiet 2>$null) -join '' -replace "`0",''
+            return [bool]$d.Trim()
+        }
     }
     $clave = if ($item.detectar) { $item.detectar } else { $item.nombre }
     return [bool]($instalados | Where-Object { $_ -like "*$clave*" })

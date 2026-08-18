@@ -14,7 +14,9 @@
     { "funcion": "Editor de codigo",     "nombre": "Zed",           "detectar": "Zed",          "winget": "ZedIndustries.Zed" },
     { "funcion": "OCR de todos los dias","nombre": "Tesseract",     "detectar": "Tesseract",    "winget": "UB-Mannheim.TesseractOCR" },
     { "funcion": "Videollamadas",        "nombre": "Zoom",          "detectar": "Zoom",         "winget": "Zoom.Zoom" },
-    { "funcion": "Asistente de IA",      "nombre": "Claude",        "detectar": "Claude",       "winget": "Anthropic.Claude" }
+    { "funcion": "Asistente de IA",      "nombre": "Claude",        "detectar": "Claude",       "winget": "Anthropic.Claude" },
+    { "funcion": "Documentos y planillas","nombre": "Microsoft 365 (solo local)", "detectar": "Microsoft 365", "winget": "Microsoft.Office",
+      "nota": "Decidido el 2026-08-18: Office SI, OneDrive nunca. Es mejor herramienta para escritos con control de cambios y formato; el problema nunca fue Word. OneDrive queda bloqueado por politica y Office configurado para guardar en disco, sin Copilot." }
   ],
 
   "local": [
@@ -58,8 +60,8 @@
   "_nota_deteccion": "El registro de Windows deja entradas muertas: un programa desinstalado sigue figurando. Por eso los prohibidos se verifican por RUTA real del programa, no por el registro.",
 
   "prohibidos": [
-    { "nombre": "Microsoft 365",        "motivo": "capa de documentos: la cubre Google Docs",
-      "ruta": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE" },
+    { "nombre": "LibreOffice",          "motivo": "doble dueño de documentos: con Office instalado, sobra",
+      "ruta": "C:\\Program Files\\LibreOffice\\program\\soffice.exe" },
     { "nombre": "OneDrive",             "motivo": "capa de documentos: la cubre Google Drive",
       "ruta": "%LOCALAPPDATA%\\Microsoft\\OneDrive\\OneDrive.exe" },
     { "nombre": "Copilot",              "motivo": "duplica a Claude",

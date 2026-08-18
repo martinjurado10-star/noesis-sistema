@@ -60,14 +60,25 @@ Y la consecuencia operativa, que es la que hay que aplicar cuando algo se pone c
 
 > **Una herramienta para cada cosa. Una sola.**
 
-Y el corolario, que es el que decide los casos difíciles:
+Y el corolario, corregido el 2026-08-18 después de probarlo en la práctica:
 
-> **Cero Microsoft en la capa de documentos.** Microsoft queda solo como infraestructura
-> inevitable: el sistema operativo y GitHub como repositorio remoto.
+> **Cero nube de Microsoft. Office de escritorio sí.**
 
-GitHub es de Microsoft desde 2018 y Windows también: la regla literal "cero Microsoft"
-dejaría la máquina sin sistema y sin repositorio. La línea real es **la capa de
-documentos** — ahí no entra: ni Word, ni Excel, ni OneDrive.
+La primera versión de esta regla decía "cero Microsoft en la capa de documentos" y se
+sacó Office entero. Duró unas horas: **el problema nunca fue Word, fue OneDrive.** Office
+es mejor herramienta para lo que hace MJM —escritos con control de cambios, formato
+armado, lo que le mandan colegas y tribunales— y la suscripción ya estaba paga.
+
+La línea correcta es la nube, no el programa:
+
+| | |
+|---|---|
+| **Office de escritorio** | **sí** — guardando en disco, sin Copilot |
+| **OneDrive** | **no**, y bloqueado por política para que no vuelva |
+| GitHub | sí — es infraestructura, y es de Microsoft desde 2018 |
+
+Ese bloqueo es lo que hace segura la puerta abierta: Office puede reinstalarse cuantas
+veces haga falta sin que OneDrive vuelva con él.
 
 **Se habita en tres lugares y nada más: Google, GitHub y local.**
 
