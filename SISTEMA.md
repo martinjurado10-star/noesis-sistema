@@ -262,6 +262,32 @@ que salen de un archivo en `_PRIVADO` porque llevan nombres de expedientes; y pr
 para el domingo. Gmail y Calendar en vivo quedan para cuando se conecten esos servicios,
 que pide autorización en el navegador.
 
+## El pipeline de ingesta
+
+```
+MUNDO EXTERIOR   PDF · DOCX · XLSX · PPTX · ZIP · fotos · escaneos
+       |
+   01 ENTRADA    el original, donde este. NUNCA se mueve ni se toca.
+       |
+  NORMALIZADOR   10_ingesta — automatico cada 10 min, o un clic
+       |
+  02 PROCESADO   el .md, con metadatos.  estado: sin_validar
+       |
+  03 VALIDADO    el MISMO .md.           estado: validado + quien y cuando
+       |
+        IA       Claude · NotebookLM · lo que venga
+```
+
+**Las etapas son estados, no carpetas.** Si fueran carpetas, el mismo documento viviria
+en tres lugares a la vez: es el doble dueño que prohibe el principio rector, y termina
+en "cual de las tres copias es la buena". El campo `estado` del encabezado de cada `.md`
+**es** la etapa; el documento no se muda, cambia de estado.
+
+Estado al 2026-08-17: **la etapa 03 no existe todavia.** 31 archivos dicen
+`sin_validar` y no hay nada que lo cambie. Falta definir —es criterio de MJM, no
+tecnico— que significa validar: leerlo, cotejarlo contra el original, confirmar que el
+OCR no se comio nada.
+
 ## Pendientes
 
 - **`C:\Noesis\10_ingesta` no está en ningún repositorio.** Es la carpeta con las piezas
