@@ -8,3 +8,6 @@ _respaldo*/
 
 # El panel se regenera solo: no se versiona el resultado, si el generador.
 panel.html
+
+# Herramientas de terceros que se descargan: no se versionan.
+_herramientas/

@@ -66,15 +66,23 @@ if (Test-Path 'C:\Program Files\Adobe\Adobe Creative Cloud') {
         Stop-Process -Force -ErrorAction SilentlyContinue
     Start-Sleep -Seconds 5
 
-    $u = 'C:\Program Files (x86)\Adobe\Adobe Creative Cloud\Utils\Creative Cloud Uninstaller.exe'
-    if (Test-Path $u) {
-        Write-Host ""
-        Write-Host "    >>> SE ABRE LA VENTANA DE ADOBE: apreta DESINSTALAR ahi." -ForegroundColor Yellow
-        Write-Host "        Sin ese clic Adobe no sale. Puede tardar en aparecer." -ForegroundColor Yellow
-        Write-Host ""
-        Start-Process -FilePath $u -Wait
+    # El desinstalador comun de Adobe se planta cuando algo suyo sigue vivo.
+    # Para eso Adobe hace su propia herramienta de limpieza: es la que usamos.
+    $limpiador = Join-Path $PSScriptRoot '_herramientas\AdobeCreativeCloudCleanerTool.exe'
+    if (Test-Path $limpiador) {
+        Write-Host "           usando el limpiador oficial de Adobe ..." -ForegroundColor DarkGray
+        Start-Process -FilePath $limpiador -ArgumentList '--eulaAccepted=1','--removeAll=ALL' -Wait
     } else {
-        Write-Host "           no encuentro el desinstalador de Adobe" -ForegroundColor Red
+        $u = 'C:\Program Files (x86)\Adobe\Adobe Creative Cloud\Utils\Creative Cloud Uninstaller.exe'
+        if (Test-Path $u) {
+            Write-Host "    >>> SE ABRE LA VENTANA DE ADOBE: apreta DESINSTALAR ahi." -ForegroundColor Yellow
+            Start-Process -FilePath $u -Wait
+        } else {
+            Write-Host "           no encuentro con que desinstalar Adobe" -ForegroundColor Red
+        }
+    }
+    foreach ($r in @('C:\Program Files\Adobe','C:\Program Files (x86)\Adobe')) {
+        Remove-Item $r -Recurse -Force -ErrorAction SilentlyContinue
     }
 } else {
     Write-Host "           Adobe ya no esta" -ForegroundColor Green
