@@ -24,7 +24,39 @@ instalado, por qué, y qué está prohibido. Si algo se instala, se declara acá
 
 ---
 
-## La regla
+## Principio rector: convergencia arquitectónica
+
+> **Una sola fuente de verdad. Un solo responsable por componente.**
+
+| Componente | Único responsable |
+|---|---|
+| Sistema operativo | **Windows** |
+| Nube | **Google Drive** |
+| Documentos de escritorio | **Office**, y solo local |
+| Código | **Git** |
+| Papeles a texto | **`10_ingesta`** |
+| Diseño de la máquina | **`00_sistema`** |
+| Datos del stack | **`stack.json`** |
+
+Y la consecuencia operativa, que es la que hay que aplicar cuando algo se pone confuso:
+
+> **Ante cualquier duda, la pregunta no es "¿dónde lo guardo?" sino "¿quién es el dueño
+> de esto?".** Si la respuesta son dos, hay que matar uno. Un componente con dos dueños
+> no está duplicado: está roto, porque nadie sabe cuál de los dos es el que vale.
+
+### Dobles dueños — auditoría del 2026-08-17
+
+| Componente | Dueños | Resolución |
+|---|---|---|
+| Lista del stack | 3 → **1** | ✔ `instalar.ps1` e `inventario.ps1` ya leen `stack.json`; borradas sus copias |
+| Papeles a texto | 3 | `10_ingesta` manda. Jubilar `99_experimentos\marker_pdfs` y `Downloads\Noesis` |
+| Panel | 2 | El generador manda. El `Panel Noesis.html` de Drive es una foto vieja: borrar |
+| Carpetas de casos | 2 | **Drive manda** (es la única nube). Cotejar y unificar — detalle en `_PRIVADO` |
+| Documentos | 2 | Office manda. Sacar LibreOffice cuando Office esté andando |
+
+---
+
+## La regla operativa
 
 > **Una herramienta para cada cosa. Una sola.**
 
