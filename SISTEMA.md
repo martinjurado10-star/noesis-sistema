@@ -199,6 +199,26 @@ sin subir el documento a ningún sitio web.
 
 ---
 
+## Dónde se hace cada cosa
+
+| Superficie | Alcance | Para qué |
+|---|---|---|
+| **Chat** (claude.ai) | sin archivos | pensar, dudas sueltas |
+| **Cowork** | carpetas locales, un proyecto por caso | **producir escritos** sobre un expediente |
+| **Claude Code** | disco + git | **construir**: el motor legal, la máquina, los programas |
+
+**La máquina es siempre de Claude Code.** Instalar o sacar programas, conectores, motores,
+tareas de Windows, tocar el registro, versionar: **solo acá**. No es que convenga más —
+Chat y Cowork directamente no pueden.
+
+Y al revés: redactar un escrito sobre un expediente es de Cowork, no de acá.
+
+> **Nota que ahorra tiempo:** en Claude Code, Claude lee `G:\Mi unidad` **directo del
+> disco** — más acceso que Gemini o ChatGPT, no menos. No hace falta subir nada. Lo que
+> es difícil es en **claude.ai**, donde hay que subir archivos o conectar Drive.
+
+---
+
 ## Las carpetas
 
 | Carpeta | Qué gobierna |
