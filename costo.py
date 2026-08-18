@@ -7,6 +7,7 @@ Claude Code deja el detalle de cada sesion en disco. Esto lo suma y lo
 traduce a plata.
 
     python costo.py            resumen: hoy, este mes, historico
+    python costo.py --piso     por que salio caro: piso y turnos
     python costo.py --detalle  sesion por sesion
 
 OJO CON EL NUMERO
@@ -36,6 +37,8 @@ def leer_sesiones():
     for f in PROYECTOS.rglob("*.jsonl"):
         t = collections.Counter()
         ultimo = None
+        piso = None      # contexto ya cargado antes del primer turno
+        turnos = 0
         try:
             with open(f, encoding="utf-8", errors="replace") as fh:
                 for linea in fh:
@@ -52,6 +55,11 @@ def leer_sesiones():
                               "cache_creation_input_tokens",
                               "cache_read_input_tokens"):
                         t[k] += u.get(k) or 0
+                    turnos += 1
+                    if piso is None:
+                        piso = ((u.get("input_tokens") or 0)
+                                + (u.get("cache_read_input_tokens") or 0)
+                                + (u.get("cache_creation_input_tokens") or 0))
                     ultimo = d.get("timestamp") or ultimo
         except OSError:
             continue
@@ -67,7 +75,8 @@ def leer_sesiones():
         if cuando is None:
             cuando = datetime.date.fromtimestamp(f.stat().st_mtime)
         sesiones.append({"archivo": f.name[:8], "fecha": cuando, "tokens": t,
-                         "proyecto": f.parent.name})
+                         "proyecto": f.parent.name,
+                         "piso": piso or 0, "turnos": turnos})
     return sorted(sesiones, key=lambda s: s["fecha"])
 
 
@@ -101,6 +110,34 @@ def mostrar(titulo, ses):
     print(f"    COSTO              {plata(costo(t)):>14}")
 
 
+def mostrar_piso(ses):
+    """Las dos cosas que gobiernan el gasto: el piso y los turnos.
+
+    PISO   = lo que ya esta cargado antes de que MJM escriba una palabra:
+             instrucciones de Claude + herramientas + plugins conectados.
+             Se relee ENTERO en cada turno. Si sube, sube todo.
+    TURNOS = cuantas idas y vueltas tuvo la sesion. El costo no crece con
+             los turnos: crece MUCHO mas rapido, porque cada turno relee
+             todo lo anterior. El doble de larga cuesta como cuatro.
+    """
+    print(f"\n  DE DONDE SALE EL GASTO")
+    print(f"  {'-' * 58}")
+    print(f"    {'fecha':<12}{'piso':>10}{'turnos':>9}{'costo':>14}")
+    for s in ses:
+        print(f"    {str(s['fecha']):<12}{s['piso']:>10,}{s['turnos']:>9,}"
+              f"{costo(s['tokens']):>13,.2f}")
+    if len(ses) > 1:
+        pisos = [s["piso"] for s in ses if s["piso"]]
+        print(f"\n    Piso mas bajo visto: {min(pisos):,}  |  mas alto: "
+              f"{max(pisos):,}")
+        print("    Sube solo cuando se conectan plugins. Nada que no se use")
+        print("    deberia estar conectado: se paga en cada turno, siempre.")
+        peor = max(ses, key=lambda s: costo(s["tokens"]))
+        print(f"\n    La mas cara: {peor['turnos']:,} turnos, "
+              f"{plata(costo(peor['tokens']))}. Una sesion que no se cierra")
+        print("    es la forma mas cara de trabajar que hay.")
+
+
 if __name__ == "__main__":
     ses = leer_sesiones()
     if not ses:
@@ -116,6 +153,9 @@ if __name__ == "__main__":
     mostrar("ESTE MES", [s for s in ses if s["fecha"].year == hoy.year
                          and s["fecha"].month == hoy.month])
     mostrar("TODO", ses)
+
+    if "--piso" in sys.argv:
+        mostrar_piso(ses)
 
     if "--detalle" in sys.argv:
         print(f"\n  SESION POR SESION")

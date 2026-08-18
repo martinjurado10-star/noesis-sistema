@@ -82,6 +82,42 @@ for d in 00_nucleo 00_sistema 01_cerebro 10_ingesta; do cd "/c/Noesis/$d" && ech
 Sirve al cerrar una sesión que tocó código. Lo que se busca es `SIN-REMOTO` o
 `ahead`: son las dos formas de tener trabajo que existe en un solo lugar.
 
+## 9. El piso y los turnos — lo que gobierna el gasto
+
+Medido el 2026-08-18 sobre las sesiones reales. Dos cosas explican casi todo, y
+**ninguna de las dos es el trabajo**:
+
+**El piso.** Lo que ya está cargado antes de que MJM escriba una palabra:
+instrucciones, herramientas y **plugins conectados**. Se relee entero en cada
+turno. El 2026-08-18 el piso era **70.458 fichas, y sólo 4.100 eran de MJM**
+—`CLAUDE.md`, el perfil y el índice de memorias, un 6%—. El otro 94% era el
+catálogo de plugins que nunca se usan: Carta, Twilio, Zapier, Adobe, ZoomInfo,
+CockroachDB. Y crecía solo: de 56.759 a 70.458 en cuatro días, sin que MJM
+agregara nada suyo.
+
+**Los turnos.** El costo **no** crece con la duración: crece mucho más rápido,
+porque cada turno relee todo lo anterior. El doble de larga cuesta como cuatro.
+
+| Sesión del 2026-08-18 | Turnos | Costo |
+|---|---|---|
+| la que se cerró al terminar el tema | 126 | **USD 11,70** |
+| la que quedó abierta | **939** | **USD 226,07** |
+
+**Qué se hace.** Desconectar todo plugin que no se use —se paga en cada turno de
+cada sesión, para siempre— y cerrar la sesión cuando termina el tema. Las dos
+cosas cuestan **cero capacidad**: no sacan ninguna herramienta que se use.
+
+**Qué NO se toca:** `CLAUDE.md`, el perfil y las memorias. Son el 6% del piso y
+son justo lo que hace que Claude sepa quién es MJM y cómo trabaja. Recortar ahí
+ahorra casi nada y sí hace perder capacidad. El instinto de "achico todo" se
+equivoca de blanco.
+
+El diagnóstico está en el medidor, no en un script aparte (regla 3):
+
+```bash
+python costo.py --piso
+```
+
 ---
 
 ## Reglas técnicas ganadas a golpes
@@ -113,4 +149,4 @@ sesión que hubo que rehacer. No se agregan buenas intenciones. Formato: qué se
 hace, y abajo **por qué** — el por qué es lo que evita que alguien la deshaga
 dentro de seis meses.
 
-_Última regla sumada: 2026-08-18 (regla 8: versionado no es respaldado)._
+_Última regla sumada: 2026-08-18 (regla 9: el piso y los turnos)._
