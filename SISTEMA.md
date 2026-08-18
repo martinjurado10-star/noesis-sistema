@@ -78,23 +78,52 @@ pide placa de video.** Si la pide, no va.
 
 Una función, una herramienta. Si aparece una segunda para lo mismo, sobra una.
 
-| Función | Herramienta | Dónde vive |
-|---|---|---|
-| Sistema operativo | Windows 11 | — |
-| Navegador | Google Chrome | — |
-| Documentos y planillas | Google Docs / Sheets | la nube |
-| Nube de archivos | Google Drive | `G:\Mi unidad` |
-| Repositorio de código | Git + GitHub | `01_cerebro` |
-| Asistente de IA | Claude (Code y escritorio) | — |
-| Lenguaje principal | Python 3.12 | `AppData\Local\Programs\Python\Python312` |
-| Lenguaje web | Node.js | — |
-| Editor de código | Zed | — |
-| OCR de todos los días | Tesseract 5.4 + castellano | `Program Files\Tesseract-OCR` |
-| PDF complejo (a pedido) | Marker | `99_experimentos\marker-env` |
-| Ingesta a Markdown | motor propio | `10_ingesta` |
-| Diseño gráfico | Canva | la nube |
-| Videollamadas | Zoom | — |
-| Soporte remoto | TeamViewer | — |
+**El detalle vive en `stack.json`, que es la fuente única** — lo leen el panel, el
+instalador y el inventario. Acá va el mapa; ahí, los datos.
+
+Son **tres listas**, porque son tres cosas distintas y se verifican distinto:
+
+### 1. Programas — se instalan con un comando y se verifican solos
+
+| Función | Herramienta |
+|---|---|
+| Sistema operativo | Windows 11 |
+| Navegador | Google Chrome |
+| Nube de archivos | Google Drive (`G:\Mi unidad`) |
+| Control de versiones | Git · GitHub CLI · GitHub Desktop |
+| Lenguaje principal | Python 3.12 |
+| Lenguaje web | Node.js |
+| Editor de código | Zed |
+| OCR de todos los días | Tesseract 5.4 |
+| Videollamadas | Zoom |
+| Asistente de IA | Claude |
+
+### 2. Piezas propias — puestas a mano o construidas acá
+
+No salen de ningún instalador, y si se pierden no hay dónde volver a bajarlas: **son las
+que justifican tener este repositorio.**
+
+| Función | Pieza |
+|---|---|
+| PDF complejo, a pedido | Marker (`99_experimentos\marker-env`) |
+| Motor de OCR de Marker | `llama-server` — sin esto Marker no hace OCR |
+| Castellano del OCR | `spa.traineddata` — sin esto Tesseract lee como si fuera inglés |
+| Papeles a texto | Ingesta NOÉSIS (`10_ingesta`) |
+| Liquidaciones | Motor de `liquidar-ar` |
+
+### 3. Servicios — viven en la nube, no se instalan
+
+No se verifican (no hay cómo), pero **se declaran igual: si no están acá, hay funciones
+del día sin dueño y el diseño miente.**
+
+| Función | Servicio |
+|---|---|
+| Correo | Gmail |
+| Agenda | Google Calendar |
+| Documentos y planillas | Google Docs / Sheets |
+| Repositorio remoto | GitHub |
+| Diseño gráfico | Canva |
+| Lectura de material | NotebookLM — lee los `.md` convertidos, no los PDF |
 
 ### Prohibidos
 
