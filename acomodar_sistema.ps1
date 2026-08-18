@@ -89,6 +89,18 @@ if (Test-Path 'C:\Program Files\Adobe\Adobe Creative Cloud') {
 }
 Write-Host ""
 
+# ---------- 2c. LibreOffice ----------
+# Estaba de puente mientras Office no estaba. Con Office andando sobra:
+# dos programas para la misma funcion es el doble dueño que prohibe el
+# principio rector. Las asociaciones ya apuntan a Word y Excel.
+Paso "LibreOffice (ya sobra: Office cubre documentos)" {
+    if (Test-Path 'C:\Program Files\LibreOffice\program\soffice.exe') {
+        Get-Process soffice* -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+        Start-Sleep -Seconds 2
+        winget uninstall --id TheDocumentFoundation.LibreOffice --silent --disable-interactivity 2>&1 | Out-Null
+    }
+}
+
 # ---------- 3. Office ----------
 Write-Host "  [3 de 4] Instalando Microsoft 365 (tarda, no cierres) ..." -ForegroundColor White
 if (Test-Path 'C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE') {
