@@ -205,6 +205,31 @@ Start-Process powershell -Verb RunAs -ArgumentList '-ExecutionPolicy','Bypass','
 
 ---
 
+## Lo próximo: agenda y panel dominical
+
+Decidido el 2026-08-17. **Dos piezas con propósitos distintos, y no se pisan:**
+
+| | Para qué | Cuándo |
+|---|---|---|
+| **Google Calendar** | **alertar.** Los vencimientos suenan en el celular sin depender de abrir nada | siempre |
+| **Panel dominical** | **planear.** Qué venció, qué se tocó, cómo está el sistema | domingo a la tarde |
+
+Un vencimiento no puede depender de que uno se acuerde de abrir algo: por eso alertar es
+del Calendar y no del panel.
+
+**El panel no usa IA ni tiene costo.** Es Python leyendo archivos del disco: no consulta a
+ningún modelo, no manda nada a internet, funciona sin conexión. Y **no acumula archivos**:
+`panel.html` se pisa a sí mismo, siempre es uno solo, y no se versiona (el repo guarda el
+generador, no el resultado).
+
+Semanal y no diario a propósito: lo diario no cuesta plata pero cuesta atención — un panel
+que casi siempre dice lo mismo se vuelve paisaje.
+
+**Para construirlo falta:** unificar `panel.py` (que ya existe y anda) con los vencimientos,
+que salen de un archivo en `_PRIVADO` porque llevan nombres de expedientes; y programarlo
+para el domingo. Gmail y Calendar en vivo quedan para cuando se conecten esos servicios,
+que pide autorización en el navegador.
+
 ## Pendientes
 
 - **Cuatro carpetas de trabajo duplicadas** entre `C:\Users\M01\Desktop` y
