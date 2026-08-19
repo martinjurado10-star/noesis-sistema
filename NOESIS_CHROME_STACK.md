@@ -12,13 +12,20 @@ exacto en `chromewebstore.google.com`.
 | Extensión | Para qué | Instalar (un clic de MJM) |
 |---|---|---|
 | **Extensity** | Prender y apagar extensiones en un clic, y armar **perfiles** (grupos): las apagadas no gastan RAM. | [Chrome Web Store](https://chromewebstore.google.com/detail/extensity/jjmflmamggggndanpgfnpelongoepncg) |
-| **MarkDownload — Markdown Web Clipper** | La página que estás viendo → **Markdown estructurado**, sin menús ni código basura. Para artículos y notas. | [Chrome Web Store](https://chromewebstore.google.com/detail/markdownload-markdown-web/pcmpcfapbekmbjjkdalcgopdkipoggdi) |
+| **PageMarkdown — Markdown Web Clipper** | La página que estás viendo → **Markdown estructurado**, sin menús ni código basura. Para artículos y notas. | [Chrome Web Store](https://chromewebstore.google.com/detail/pagemarkdown-markdown-web/lcfleojmfgkfkcfmagcakinahijacbok) |
 | **SingleFile** | Guarda la página **completa en un solo `.html`** en Descargas: captura offline, prueba de cómo se veía ese día. | [Chrome Web Store](https://chromewebstore.google.com/detail/singlefile/mpiodijhokgodhhofbcjdecpffjipkle) |
 | **JSON Formatter** | Al abrir una API o un `.json` en el navegador lo muestra ordenado y plegable. Automático, sin botones. | [Chrome Web Store](https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) |
 
 - La instalación es **un clic de MJM** en cada link — Claude deja todo hasta la puerta
   (regla del `PROTOCOLO.md`: la credencial y el clic son de MJM).
 - Atajos de teclado de cada extensión: se configuran en `chrome://extensions/shortcuts`.
+- **Baja registrada (2026-08-19): MarkDownload.** Era la elegida original para web →
+  Markdown, pero la tienda la marcó de baja por ser **Manifest V2** — el formato viejo
+  de extensiones que Chrome jubiló — y sin actualizaciones. La reemplaza PageMarkdown
+  (misma función, formato vigente). La lección queda escrita: una extensión es una
+  pieza ajena que puede morir por decisión de la tienda; por eso la vía que no se
+  negocia es la nativa de Noesis, **SingleFile + `web_a_md.py`**, que no depende de
+  ninguna tienda.
 
 ## Ahorro de RAM que ya viene de fábrica
 
@@ -32,7 +39,7 @@ no suma ninguna pieza al stack.
 
 ```
  ver una página en Chrome
-    ├─ MarkDownload → baja el .md directo               (artículos, lo rápido)
+    ├─ PageMarkdown → baja el .md directo               (artículos, lo rápido)
     ├─ SingleFile   → .html a Descargas
     │                    └─ python web_a_md.py --barrido → material_convertido
     └─ URL suelta   → python web_a_md.py <url>          (sin abrir el navegador)

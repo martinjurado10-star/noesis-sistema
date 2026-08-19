@@ -52,8 +52,11 @@ gasta RAM):
   importa: la búsqueda extensiva de fechas **se inventó una fecha** en la prueba
   (`2026-01-01` en un html sin fecha declarada) — quedó apagada; mejor sin fecha que
   con una inventada.
-- **`NOESIS_CHROME_STACK.md`**: las cuatro extensiones (Extensity · MarkDownload ·
+- **`NOESIS_CHROME_STACK.md`**: las cuatro extensiones (Extensity · PageMarkdown ·
   SingleFile · JSON Formatter), el circuito página→`.md`, y cómo navega Claude.
+  La elegida original para web→Markdown era MarkDownload, pero la tienda la marcó
+  de baja el mismo día (Manifest V2, sin actualizaciones) y se reemplazó por
+  PageMarkdown — el porqué quedó escrito en el propio `NOESIS_CHROME_STACK.md`.
 - Registrado todo en `stack.json` (revisión 2026-08-19) y `SISTEMA.md`; regla técnica
   nueva en `PROTOCOLO.md` (Git Bash convierte `/c` en `C:/` — costó un registro MCP roto).
 
@@ -97,7 +100,7 @@ Detalle en `claude_config\LEEME.md`. **Nuevo de hoy:** la config de usuario de C
 ### Inmediato — un clic de MJM cada uno
 
 1. **Instalar las cuatro extensiones de Chrome** desde los links de
-   `NOESIS_CHROME_STACK.md` (Extensity · MarkDownload · SingleFile · JSON Formatter).
+   `NOESIS_CHROME_STACK.md` (Extensity · PageMarkdown · SingleFile · JSON Formatter).
    Claude no instala extensiones: el clic es de MJM.
 2. **Probar el MCP en una sesión nueva** de Claude Code: pedirle que navegue a una
    página y la resuma. Si conecta y navega, la capa queda estrenada.
