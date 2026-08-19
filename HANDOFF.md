@@ -29,11 +29,15 @@ distillation*: nada se construye "porque haría falta", todo nace de un caso rea
 después se empaqueta. Quedó escrita en `PROTOCOLO.md` §14 y en el `CLAUDE.md` global,
 con el paso de **Post-Mortem obligatorio antes de archivar** cualquier caso.
 
-**Y se cerró la puerta de entrada** (`PROTOCOLO.md` §15): Code ejecuta, no idea. Un pedido
-entra sólo con **objetivo funcional + rutas exactas + criterio de validación**; si falta
-alguna, se aborta antes de escribir una línea y se deriva a la Mesa de Diseño o al caso
-activo en `G:`. Las dos reglas son la misma idea por los dos extremos: la 15 filtra lo que
-entra, la 14 obliga a que lo que sale deje pieza.
+**Y se cerró la puerta de entrada** (`PROTOCOLO.md` §15): **Code ejecuta y mapea, no
+idea.** Un pedido de construcción entra sólo con **objetivo funcional + rutas exactas +
+criterio de validación**; si falta alguna, se aborta antes de escribir una línea y se
+deriva a la Mesa de Diseño o al caso activo en `G:`. **Con una excepción escrita en la
+misma regla —Modo Piloto—**: leer el disco, reportar repos y herramientas y proponer el
+próximo paso de este archivo no necesitan directiva previa, porque no construyen nada.
+
+Las dos reglas son la misma idea por los dos extremos: la 15 filtra lo que entra, la 14
+obliga a que lo que sale deje pieza.
 
 **Lo importante: no se creó ninguna topología nueva.** El árbol que pedía la directiva
 (`casos\` + `knowledge\` + `skills\` + `agents\` en la raíz de `C:\Noesis`) ya existía
@@ -109,18 +113,24 @@ Lo que efectivamente se escribió:
 
 ### Bloque C — Compuerta de ejecución (misma sesión)
 
-- **`PROTOCOLO.md` §15 — Code no idea, ejecuta.** Un pedido entra sólo con las tres
-  cosas: **objetivo funcional · rutas exactas · criterio de validación**. Si falta
-  cualquiera, se aborta antes de generar código y se responden dos líneas fijas que
-  derivan a la Mesa de Diseño o al caso activo en `G:`. Va también en el `CLAUDE.md`
-  global, como primera sección de lo específico de Code: rige en toda carpeta.
-- **Dónde está la costura, para revisarla con uso.** La compuerta convive con dos cosas
-  que tiran en sentido contrario — el **modo piloto** (que Claude proponga rumbo y
-  siguiente paso) y la propia directiva que originó el bloque B, que no traía rutas
-  exactas ni criterio de validación y sin embargo dio trabajo útil. Por eso la regla lleva
-  escrito su límite: **las dos líneas son para lo que no se puede ejecutar, no para lo que
-  se puede ejecutar distinto.** Si en el uso real la compuerta empieza a rebotar pedidos
-  que después resultaron buenos, ahí se ajusta — es el único dato que lo va a decidir.
+- **`PROTOCOLO.md` §15 — Code ejecuta y mapea, no idea.** Un pedido de construcción entra
+  sólo con las tres cosas: **objetivo funcional · rutas exactas · criterio de validación**.
+  Si falta cualquiera —o es debate doctrinario, lluvia de ideas, consulta jurídica
+  abstracta o desarrollo sin caso real que lo justifique— se aborta antes de generar
+  código, módulos o abstracciones, y se responden dos líneas fijas que derivan a la Mesa
+  de Diseño (Chat Noesis) o al caso activo en `G:`. Va también en el `CLAUDE.md` global,
+  como primera sección de lo específico de Code: rige en toda carpeta.
+- **La excepción, escrita en la misma regla: Modo Piloto.** Sin directiva previa y siempre
+  permitido, porque no construye nada: leer el disco · `git status` · `claude mcp list` ·
+  **proponer el siguiente paso del `HANDOFF.md`**. La compuerta cierra la puerta de
+  **escribir**, no la de **mirar y orientar**. Sin esto, Claude no podría decir en qué
+  estado está la máquina ni cuál es el próximo paso, y el estado del sistema volvería a la
+  cabeza de MJM — justo lo que este archivo existe para evitar.
+- **Por qué la excepción está desde el día uno.** La primera redacción de la §15 sólo
+  tenía la parte que rechaza. Con ese texto, la directiva que originó el bloque B —sin
+  rutas exactas ni criterio de validación— habría rebotado en dos líneas, y no existirían
+  ni el Post-Mortem ni `modelos\`. El rol quedó entonces declarado con sus dos mitades:
+  **ejecutor técnico terminal y mapeador de disco**.
 - **Regla técnica nueva:** un `.md` abierto en **Word** bloquea la escritura (`EPERM` /
   `Device or resource busy`). Pasó con este mismo archivo. De ahí el corolario que quedó
   escrito: **el contenido se redacta primero en el scratchpad y después se copia**, así un
@@ -261,7 +271,8 @@ Si una sesión nueva propone lo contrario de algo de esta lista, la respuesta ya
 | **No hay segunda carpeta `skills\`** (2026-08-19) | `~/.claude/skills` es un junction a `01_cerebro\skills`; una homónima queda invisible para Claude |
 | **Un agente por materia se abre al final, no al principio** (2026-08-19) | primero masa crítica de casos cerrados que destilaron fichas; la carpeta vacía finge que el área existe |
 | **Ningún caso se archiva sin Post-Mortem** (2026-08-19) | es el único momento en que el dato del caso y la pieza reutilizable están en la misma mesa |
-| **Code ejecuta, no idea** (2026-08-19) | sin objetivo + rutas exactas + criterio de validación, el pedido no tiene forma de terminar: es la sesión de 939 turnos vista desde su causa |
+| **Code ejecuta y mapea, no idea** (2026-08-19) | sin objetivo + rutas exactas + criterio de validación, el pedido no tiene forma de terminar: es la sesión de 939 turnos vista desde su causa |
+| **El Modo Piloto no necesita directiva** (2026-08-19) | leer disco, `git status`, `claude mcp list` y proponer el próximo paso no construyen nada; la compuerta cierra la puerta de escribir, no la de mirar |
 | **Los `.md` se redactan en el scratchpad y se copian** (2026-08-19) | Word los bloquea en exclusiva; así un bloqueo cuesta un `cp` y no volver a redactar |
 
 ---

@@ -19,26 +19,33 @@ Lo de abajo es únicamente lo específico de Claude Code.
 
 ---
 
-## Compuerta de entrada: Code ejecuta, no idea (2026-08-19)
+## Compuerta de entrada: Code ejecuta y mapea, no idea (2026-08-19)
 
-**Claude Code es un ejecutor técnico terminal.** No es mesa de ideación ni consultorio
-jurídico. Un pedido entra sólo si trae las tres cosas: **objetivo funcional** ·
-**restricciones y límites (rutas exactas)** · **criterio de validación**.
+**Claude Code es un ejecutor técnico terminal y un mapeador de disco.** No es mesa de
+ideación conceptual ni consultorio jurídico abstracto. Un pedido de construcción entra
+sólo si trae las tres cosas: **objetivo funcional** · **restricciones y límites (rutas
+exactas)** · **criterio de validación**.
 
-Si falta cualquiera —o es un debate conceptual, una consulta jurídica abstracta o un
-prompt ambiguo— **abortar antes de generar código o arquitectura** y responder exactamente
-estas dos líneas, sin agregar nada:
+Si falta cualquiera —o es un debate doctrinario, una lluvia de ideas, una consulta
+jurídica abstracta, o desarrollo **sin un caso real que lo justifique**— **abortar antes
+de generar código, módulos o abstracciones** y responder exactamente estas dos líneas,
+sin agregar nada:
 
 ```
 Falta especificación técnica estructurada / diseño conceptual previo.
-Definir primero el QUÉ en la Mesa de Diseño (Chat/Mesa Noesis) o resolverlo en el
-caso activo en G:\ antes de codificar acá.
+Definir primero el QUÉ en la Mesa de Diseño (Chat Noesis) o resolverlo en el caso
+activo en G:\ antes de codificar.
 ```
 
-**El límite:** las dos líneas son para lo que **no se puede ejecutar**, no para lo que
-**se puede ejecutar distinto**. Si el pedido es ejecutable pero su topología choca con lo
-que ya hay en disco, corresponde el mapeo pieza por pieza contra el disco y después
-ejecutar lo que falta — no el rechazo. Detalle en `00_sistema\PROTOCOLO.md` §15.
+**Excepción operativa — Modo Piloto.** Sin directiva previa y siempre permitido, porque
+no construye nada: **leer el disco** · **estado de los repos** (`git status`) ·
+**verificar herramientas** (`claude mcp list`) · **proponer el siguiente paso del
+`HANDOFF.md`**. La compuerta cierra la puerta de escribir, no la de mirar y orientar.
+
+**El otro límite:** las dos líneas son para lo que **no se puede ejecutar**, no para lo
+que **se puede ejecutar distinto**. Si el pedido es ejecutable pero su topología choca con
+lo que ya hay en disco, corresponde el mapeo pieza por pieza y después ejecutar lo que
+falta — no el rechazo. Detalle en `00_sistema\PROTOCOLO.md` §15.
 
 ---
 

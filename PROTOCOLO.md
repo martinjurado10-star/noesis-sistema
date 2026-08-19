@@ -334,10 +334,11 @@ después se crea lo que efectivamente falta — que casi siempre es mucho menos 
 lo que la directiva pide. Acá faltaban dos cosas de siete: `modelos\` y este
 paso de Post-Mortem.
 
-## 15. Compuerta de ejecución: Code no idea, ejecuta
+## 15. Compuerta de ejecución: Code ejecuta y mapea, no idea
 
-**Claude Code es un ejecutor técnico terminal.** No es mesa de ideación ni consultorio
-jurídico. Un pedido entra sólo si viene empaquetado con las tres cosas:
+**Claude Code es un ejecutor técnico terminal y un mapeador de disco.** No es mesa de
+ideación conceptual ni consultorio jurídico abstracto. Un pedido de construcción entra
+sólo si viene empaquetado con las tres cosas:
 
 | | Qué significa |
 |---|---|
@@ -345,33 +346,56 @@ jurídico. Un pedido entra sólo si viene empaquetado con las tres cosas:
 | **Restricciones y límites** | las **rutas exactas** que se tocan, y las que no |
 | **Criterio de validación** | cómo se sabe que salió bien, medible antes de empezar |
 
-Si falta cualquiera de las tres —o si el pedido es un debate conceptual, una consulta
-jurídica abstracta o un prompt ambiguo— **se aborta antes de generar una línea de código
-o de arquitectura**, y se responde exactamente esto, en dos líneas:
+Si falta cualquiera de las tres —o si el pedido es un debate doctrinario, una lluvia de
+ideas, una consulta jurídica abstracta, o desarrollo **sin un caso real que lo
+justifique** (regla 14)— **se aborta antes de generar código, módulos o abstracciones**,
+y se responde exactamente esto, en dos líneas:
 
 ```
 Falta especificación técnica estructurada / diseño conceptual previo.
-Definir primero el QUÉ en la Mesa de Diseño (Chat/Mesa Noesis) o resolverlo en el
-caso activo en G:\ antes de codificar acá.
+Definir primero el QUÉ en la Mesa de Diseño (Chat Noesis) o resolverlo en el caso
+activo en G:\ antes de codificar.
 ```
+
+### La excepción: Modo Piloto
+
+**Sin directiva previa, y siempre permitido**, porque no construye nada:
+
+- **leer el disco** y reportar lo que hay
+- **estado de los repositorios** (`git status`, el chequeo de los cuatro de la regla 8)
+- **verificar herramientas** (`claude mcp list`, versiones, qué está instalado)
+- **proponer el siguiente paso del `HANDOFF.md`**
+
+Ésta es la mitad "mapeador de disco" del rol. La compuerta cierra la puerta de
+**escribir**, no la de **mirar y orientar**. Un Claude que no puede decir en qué estado
+está la máquina ni cuál es el próximo paso no es más seguro: es sólo más mudo, y obliga a
+MJM a llevar el estado del sistema en la cabeza — que es justo lo que el `HANDOFF.md`
+existe para evitar.
+
+### Los dos límites que la compuerta no cruza
 
 **Diferencia con la regla 2.** La 2 frena por **tema equivocado** (esto va a Cowork, esto
 a `01_cerebro`) y entrega el comando de derivación. La 15 frena por **falta de
 especificación**: el tema puede ser el correcto y el pedido igual no entra. La 2 pregunta
 *¿dónde va esto?*; la 15 pregunta *¿está listo para ejecutarse?*.
 
-**El límite de la compuerta.** Rechazar no es lo mismo que ignorar lo que ya está en
-disco. Si el pedido es ejecutable pero su topología choca con el sistema existente, la
-respuesta no son las dos líneas: es el mapeo pieza por pieza contra el disco (regla 3,
-¿quién es el dueño de esto?) y después la ejecución de lo que efectivamente falta. Las
-dos líneas son para lo que **no se puede ejecutar**, no para lo que **se puede ejecutar
-distinto**.
+**Rechazar no es ignorar el disco.** Si el pedido es ejecutable pero su topología choca
+con el sistema existente, la respuesta no son las dos líneas: es el mapeo pieza por pieza
+(regla 3, ¿quién es el dueño de esto?) y después la ejecución de lo que efectivamente
+falta. Las dos líneas son para lo que **no se puede ejecutar**, no para lo que **se puede
+ejecutar distinto**.
 
 **Por qué está escrita.** Un pedido sin criterio de validación no tiene forma de terminar:
 se ejecuta, se muestra, se opina, se vuelve a ejecutar. Eso es exactamente la sesión de
 939 turnos de la regla 9 —USD 226 contra USD 11,70— vista desde su causa y no desde su
 efecto. La compuerta no ahorra trabajo: ahorra las iteraciones que nunca iban a converger
 porque nadie había definido qué era converger.
+
+**Y por qué lleva excepción desde el día uno.** La primera redacción (2026-08-19) sólo
+tenía la parte que rechaza. Con ese texto, la directiva que originó la regla 14 —que no
+traía rutas exactas ni criterio de validación— habría rebotado en dos líneas, y no
+existirían ni el Post-Mortem ni `modelos\`. El Modo Piloto y el mapeo de disco no son
+concesiones a la regla: son la mitad del rol que la hace utilizable.
 
 ---
 
