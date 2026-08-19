@@ -3,7 +3,11 @@
 Mi perfil completo (identidad, cómo trabajar conmigo, reglas duras, protocolo) está acá,
 y es **la fuente única** — se edita solo en ese archivo:
 
-@C:\Noesis\_contexto\PERFIL_MJM.md
+@C:\Noesis\00_sistema\_PRIVADO\PERFIL_MJM.md
+
+Vive en `C:` y no en Drive por la regla de oro: **`G:` = papeles, `C:\Noesis` = motor.**
+El perfil son instrucciones, no un papel. Desde `G:` no cargaba cuando Drive estaba
+desmontado — pasó el 2026-08-19 y Claude arrancó sin saber quién es MJM.
 
 Manual de uso de herramientas y glosario: `C:\Noesis\_contexto\MANUAL.md` (consultar a
 pedido, no cargarlo siempre). Dos reglas de ahí que rigen SIEMPRE al responder:
@@ -15,6 +19,29 @@ Lo de abajo es únicamente lo específico de Claude Code.
 
 ---
 
+## Compuerta de entrada: Code ejecuta, no idea (2026-08-19)
+
+**Claude Code es un ejecutor técnico terminal.** No es mesa de ideación ni consultorio
+jurídico. Un pedido entra sólo si trae las tres cosas: **objetivo funcional** ·
+**restricciones y límites (rutas exactas)** · **criterio de validación**.
+
+Si falta cualquiera —o es un debate conceptual, una consulta jurídica abstracta o un
+prompt ambiguo— **abortar antes de generar código o arquitectura** y responder exactamente
+estas dos líneas, sin agregar nada:
+
+```
+Falta especificación técnica estructurada / diseño conceptual previo.
+Definir primero el QUÉ en la Mesa de Diseño (Chat/Mesa Noesis) o resolverlo en el
+caso activo en G:\ antes de codificar acá.
+```
+
+**El límite:** las dos líneas son para lo que **no se puede ejecutar**, no para lo que
+**se puede ejecutar distinto**. Si el pedido es ejecutable pero su topología choca con lo
+que ya hay en disco, corresponde el mapeo pieza por pieza contra el disco y después
+ejecutar lo que falta — no el rechazo. Detalle en `00_sistema\PROTOCOLO.md` §15.
+
+---
+
 ## Cómo se construyen las skills: MEICL v2.2
 
 El estándar vive en `C:\Noesis\01_cerebro\standards\MEICL-v2.md`. Leerlo antes de crear o
@@ -23,6 +50,11 @@ modificar una skill. Lo esencial:
 **Tres capas.** Razonamiento (`SKILL.md`) / conocimiento (`references/` con fichas y
 pinpoint) / cálculo (`scripts/` deterministas). El modelo aplica criterio y redacta; no
 memoriza derecho volátil ni calcula.
+
+**Cuarta pieza: `modelos/`** (desde 2026-08-19) — plantillas de escritos ya presentados,
+parametrizadas y sin datos de cliente. Entra por destilación, nunca redactada en abstracto.
+Forma del archivo en `skills\concursos-ar\modelos\LEEME.md`; pendiente ratificarla en
+`MEICL-v2.md`.
 
 **Escalera de madurez.** Toda pieza nace en `borrador` y sube usándose:
 `borrador → estrenada (1 caso real) → rodada (3+) → consolidada`.
@@ -37,6 +69,32 @@ La validación no es un paso aparte: **el caso facturable es el evento de valida
 **Compuerta según origen.** Un dato contrastable contra fuente oficial se valida cotejando
 el pinpoint (segundos). El **criterio** —qué se omite, qué riesgo se toma— conserva
 compuerta plena de MJM y no tiene atajo.
+
+---
+
+## Dual-track: nada abstracto (2026-08-19)
+
+**No abstract agent design without case-driven distillation.** Ninguna skill, ficha,
+modelo, script ni agente temático se crea "porque haría falta". Toda pieza nace como
+solución a una tarea concreta de un caso real y **después** se empaqueta. Si Claude
+propone construir una estructura para un área sin casos detrás, la respuesta ya está dada:
+no. Una carpeta de área vacía sólo genera la ilusión de que el área existe.
+
+**Las dos vías, y dónde vive cada una:**
+
+| Vía 1 — Operación | Vía 2 — Destilación |
+|---|---|
+| resolver el caso que factura | convertir lo resuelto en pieza reutilizable |
+| `G:\...\01_Casos_Activos\<caso>\` | `C:\Noesis\01_cerebro\skills\<área>\` |
+| **Cowork** (escritos) · NotebookLM | **Claude Code**, sesión de `01_cerebro` |
+
+**`nuevo_caso <id>`** — abrir. Carpeta en `G:\...\01_Casos_Activos\<id>\`; el material
+crudo entra por el buzón `G:\...\0_ENTRADA`, que la ingesta convierte a `.md`. **No se
+crea nada en `C:\Noesis`** — papeles a `G:`, motor en `C:`.
+
+**`destilar_caso <id>`** — cerrar. Sesión en `01_cerebro`, las cinco preguntas del
+Post-Mortem (`00_sistema\PROTOCOLO.md` §14), la madurez de cada pieza sube un escalón, y
+recién ahí el caso pasa a `02_Casos_Archivados`. **Ningún caso se archiva sin destilar.**
 
 ---
 
@@ -87,4 +145,7 @@ colegios: **sin verificar, no citar** · La Ley / elDial: de pago, fuera de alca
 - **Pendiente de MJM:** confirmar la discrepancia del art. 32 LCQ — la ficha dice
   "quirografarios < 3 SMVM" y la ley no distingue categoría. Ver
   `skills/concursos-ar/references/arancel_art32.md`.
-- Siguiente: resto del checklist de `concursos-ar`, después agente Societario.
+- Las tres skills de área tienen `modelos/` creada y vacía (2026-08-19). Se llena por
+  destilación, con el primer caso que cierre.
+- Siguiente: resto del checklist de `concursos-ar`. **El agente Societario no se arma
+  hasta que haya casos societarios cerrados que lo pidan** — regla dual-track.

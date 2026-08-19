@@ -216,6 +216,16 @@ construir algo nuevo, revisar el Escritorio.**
 - **La credencial la pone MJM.** Claude no se autentica en cuentas ajenas ni con
   autorización expresa. Cuando algo pide una llave, Claude deja todo preparado
   hasta la puerta y da el camino más corto — el clic es de MJM.
+- **Un `.md` abierto en Word bloquea la escritura.** Windows lo toma en exclusiva y
+  cualquier intento devuelve `EPERM` al renombrar o `Device or resource busy` al copiar
+  — no es un problema de permisos ni de antivirus, y reintentar no sirve. Pasó el
+  2026-08-19 con `HANDOFF.md`. **Antes de reescribir un `.md` de esta carpeta, cerrarlo
+  en Word.** Diagnóstico en una línea, sin adivinar:
+  ```bash
+  powershell -NoProfile -Command "Get-Process | Where-Object {$_.Name -match 'WINWORD|Code|notepad'} | Select-Object -ExpandProperty Name -Unique"
+  ```
+  Y el corolario: **el contenido se escribe primero en el scratchpad y después se copia.**
+  Así un bloqueo cuesta un `cp`, no volver a redactar el archivo entero.
 - **Git Bash convierte `/c` en `C:/`.** Al registrar un comando que lleva `cmd /c`
   (un servidor MCP, por ejemplo), anteponer `MSYS_NO_PATHCONV=1` y verificar el
   resultado (`claude mcp list`). Costó un registro roto el 2026-08-19. Y el
@@ -245,6 +255,124 @@ o crealo" — y crear ese archivo habría reemplazado la fuente única por una
 invención, dejando la copia falsa gobernando sobre la real. **Un archivo que no
 se puede leer no se inventa: se espera o se pregunta.**
 
+## 14. Dual-track: ningún caso se archiva sin destilar
+
+El estudio corre en **dos vías a la vez**, y la segunda no arranca sola: la
+dispara el cierre de la primera.
+
+| | Vía 1 — **Operación** | Vía 2 — **Destilación** |
+|---|---|---|
+| Qué hace | resolver el caso que factura | convertir lo resuelto en pieza reutilizable |
+| Dónde vive | `G:\...\01_Casos_Activos\<caso>\` | `C:\Noesis\01_cerebro\skills\<área>\` |
+| Con qué herramienta | **Cowork** (escritos) · NotebookLM (material largo) | **Claude Code**, sesión de `01_cerebro` |
+| Cuándo | mientras el caso está vivo | **al cerrarlo, antes de archivar** |
+
+**La regla dura: no se diseña en abstracto.** No se crea una skill, una ficha,
+un modelo ni un agente temático "porque haría falta". Toda pieza nace como
+solución a una tarea concreta de un caso real y **después** se empaqueta. Una
+skill sin caso detrás es una hipótesis con formato de certeza.
+
+**Los agentes por materia son el último paso, no el primero.** Un área nueva
+(penal, tributario, societario) **no** se abre creando su carpeta: se abre
+cuando hay masa crítica de casos cerrados que ya destilaron fichas y modelos, y
+esas piezas piden un `SKILL.md` que las gobierne. Antes de eso, la carpeta vacía
+sólo genera la ilusión de que el área existe.
+
+### El Post-Mortem, paso obligatorio antes de archivar
+
+Un caso pasa de `01_Casos_Activos` a `02_Casos_Archivados` **únicamente** después
+de esto. Cinco preguntas, y lo que sobrevive se escribe:
+
+1. **¿Qué escrito funcionó?** → a `skills\<área>\modelos\`, parametrizado y sin
+   un solo dato del cliente.
+2. **¿Qué criterio o plazo se aplicó?** → ficha en `skills\<área>\references\`,
+   con pinpoint a la fuente oficial o marcado `[a verificar]`.
+3. **¿Hubo un cálculo que se repitió a mano?** → a `skills\<área>\scripts\`,
+   determinístico y auditable. Nunca cálculo mental.
+4. **¿Qué precedente o postura judicial sirvió de verdad?** → ficha de doctrina
+   en `references\`, con la cita puntual, no el resumen.
+5. **¿Qué salió mal y volvería a salir mal?** → si es de *cómo se trabaja*, es
+   una regla y va acá. Si es de *qué se sabe*, va a la skill.
+
+Si las cinco dan "nada", el caso se archiva igual — pero eso se escribe también:
+un caso que no dejó nada es un dato sobre el caso, no un permiso para saltear
+el paso.
+
+**La madurez sube en este momento y no en otro.** Cada pieza que ya existía y se
+volvió a usar avanza un escalón: `borrador` → `estrenada` (1 caso real) →
+`rodada` (3+) → `consolidada`. Es MEICL v2.2: *el caso facturable es el evento
+de validación*. Los valores volátiles no suben nunca: runtime siempre.
+
+**El anonimato se verifica acá, no al commitear.** Es el único paso donde el
+dato del cliente y la pieza reutilizable están en la misma mesa. Si una pieza
+necesita anonimizarse *después* de entrar al repo, entró mal (P10, regla 7).
+
+### Los dos flujos, en lenguaje simple
+
+**`nuevo_caso <id>`** — abrir un caso. No es un comando: es un lugar.
+`G:\...\01_Casos_Activos\<id>\`, y el material crudo entra por el buzón
+`G:\...\0_ENTRADA` que la ingesta ya vigila y convierte a `.md`. **No se crea
+nada en `C:\Noesis`**: papeles a `G:`, motor en `C:` (regla de oro). Y el escrito
+se produce en Cowork, no acá (regla 2).
+
+**`destilar_caso <id>`** — cerrar un caso. Sesión de Claude Code en
+`C:\Noesis\01_cerebro`, con las cinco preguntas de arriba a la vista. Termina
+con el caso movido a `02_Casos_Archivados` y un commit en `noesis-legal` que no
+contiene un solo nombre propio.
+
+**Por qué está escrita.** El 2026-08-19 llegó una directiva —de otra IA, formato
+de tablero— para crear en la raíz de `C:\Noesis` un árbol `casos\` + `knowledge\`
++ `skills\` + `agents\`. Las cuatro carpetas ya existían con otro nombre y del
+lado correcto del disco: `casos\` es Drive, `knowledge\` es `references\`,
+`skills\` ya está en `01_cerebro` **y tiene un junction desde `~/.claude`** que
+una segunda carpeta homónima habría dejado ciego. Crearlas habría duplicado
+todo el sistema y puesto papeles de clientes dentro del motor. **La idea de
+fondo era correcta y ya era doctrina; lo que fallaba era la topología.** De ahí
+la lección: cuando llega una arquitectura entera de afuera, primero se mapea
+contra el disco pieza por pieza (regla 3: ¿quién es el dueño de esto?), y recién
+después se crea lo que efectivamente falta — que casi siempre es mucho menos de
+lo que la directiva pide. Acá faltaban dos cosas de siete: `modelos\` y este
+paso de Post-Mortem.
+
+## 15. Compuerta de ejecución: Code no idea, ejecuta
+
+**Claude Code es un ejecutor técnico terminal.** No es mesa de ideación ni consultorio
+jurídico. Un pedido entra sólo si viene empaquetado con las tres cosas:
+
+| | Qué significa |
+|---|---|
+| **Objetivo funcional** | qué tiene que quedar andando, no "mejorar" ni "ver si conviene" |
+| **Restricciones y límites** | las **rutas exactas** que se tocan, y las que no |
+| **Criterio de validación** | cómo se sabe que salió bien, medible antes de empezar |
+
+Si falta cualquiera de las tres —o si el pedido es un debate conceptual, una consulta
+jurídica abstracta o un prompt ambiguo— **se aborta antes de generar una línea de código
+o de arquitectura**, y se responde exactamente esto, en dos líneas:
+
+```
+Falta especificación técnica estructurada / diseño conceptual previo.
+Definir primero el QUÉ en la Mesa de Diseño (Chat/Mesa Noesis) o resolverlo en el
+caso activo en G:\ antes de codificar acá.
+```
+
+**Diferencia con la regla 2.** La 2 frena por **tema equivocado** (esto va a Cowork, esto
+a `01_cerebro`) y entrega el comando de derivación. La 15 frena por **falta de
+especificación**: el tema puede ser el correcto y el pedido igual no entra. La 2 pregunta
+*¿dónde va esto?*; la 15 pregunta *¿está listo para ejecutarse?*.
+
+**El límite de la compuerta.** Rechazar no es lo mismo que ignorar lo que ya está en
+disco. Si el pedido es ejecutable pero su topología choca con el sistema existente, la
+respuesta no son las dos líneas: es el mapeo pieza por pieza contra el disco (regla 3,
+¿quién es el dueño de esto?) y después la ejecución de lo que efectivamente falta. Las
+dos líneas son para lo que **no se puede ejecutar**, no para lo que **se puede ejecutar
+distinto**.
+
+**Por qué está escrita.** Un pedido sin criterio de validación no tiene forma de terminar:
+se ejecuta, se muestra, se opina, se vuelve a ejecutar. Eso es exactamente la sesión de
+939 turnos de la regla 9 —USD 226 contra USD 11,70— vista desde su causa y no desde su
+efecto. La compuerta no ahorra trabajo: ahorra las iteraciones que nunca iban a converger
+porque nadie había definido qué era converger.
+
 ---
 
 ## Cómo se suma una regla
@@ -254,4 +382,4 @@ sesión que hubo que rehacer. No se agregan buenas intenciones. Formato: qué se
 hace, y abajo **por qué** — el por qué es lo que evita que alguien la deshaga
 dentro de seis meses.
 
-_Última regla sumada: 2026-08-19 (regla 13: dos correcciones y se frena)._
+_Última regla sumada: 2026-08-19 (regla 15: compuerta de ejecución — Code no idea, ejecuta)._
