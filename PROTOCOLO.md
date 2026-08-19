@@ -132,6 +132,38 @@ sesiones del día para poder cerrarla. Salió bien, pero se pagó dos veces: una
 hacer el trabajo y otra al averiguar qué se había hecho. **Escribirlo cuesta una
 vez; reconstruirlo, cada vez.**
 
+## 11. El handoff también viaja a donde se idea
+
+Para pensar comandos de `00_sistema` sin estar en Code, el lugar es un **proyecto
+normal de claude.ai, no Cowork** (regla 2: Cowork es para producir escritos de un
+caso; no tiene ni necesita acceso a este disco). Ese proyecto se mantiene al día
+pegando el `HANDOFF.md` recién escrito en su Conocimiento del proyecto, cada vez
+que se cierra una sesión acá.
+
+**Por qué así y no de otra forma.** No existe una sincronización automática entre
+un proyecto de claude.ai y este disco — y aunque existiera, la regla **el repo
+manda** (la misma que rige las skills: claude.ai es borrador) dice que el sentido
+del flujo es de acá hacia afuera, nunca al revés. El `HANDOFF.md` ya se escribe
+por la regla 10; pegarlo en el proyecto no es trabajo nuevo, es el mismo archivo
+con un segundo destino.
+
+**El circuito completo:** cerrar sesión acá → se escribe/actualiza `HANDOFF.md` →
+se pega en el proyecto de claude.ai → ahí se idea con el contexto fresco → el
+comando que sirve se trae de vuelta y se corre acá, contra el disco real.
+
+**Cómo, paso a paso — nada de buscar el archivo a mano:**
+
+1. `HANDOFF.md` vive siempre en la misma ruta, `C:\Noesis\00_sistema\HANDOFF.md`,
+   y al cerrar la sesión Claude ya lo deja escrito ahí. Además lo entrega en el
+   chat como adjunto al cerrar, para no tener que ir a buscarlo.
+2. En el proyecto de claude.ai: **borrar primero** el "HANDOFF" que quedó pegado
+   la sesión anterior. Es el mismo error que costó caro con `stack.json` (regla
+   3) — dos copias de la misma verdad, y no se sabe cuál es la vigente.
+3. Agregar el nuevo con **título fijo "HANDOFF"** siempre, para encontrarlo rápido
+   la próxima vez. Dos formas, cualquiera sirve: arrastrar el archivo adjunto
+   directo al panel de contenido del proyecto, o abrirlo, `Ctrl+A` / `Ctrl+C`, y
+   pegarlo como texto.
+
 Escribirlo es del cierre, junto con el costo (regla 6) y la regla nueva si la
 hubo. Los tres pasos son uno solo y van en ese orden.
 
@@ -166,4 +198,4 @@ sesión que hubo que rehacer. No se agregan buenas intenciones. Formato: qué se
 hace, y abajo **por qué** — el por qué es lo que evita que alguien la deshaga
 dentro de seis meses.
 
-_Última regla sumada: 2026-08-18 (regla 10: el handoff antes de cerrar)._
+_Última regla sumada: 2026-08-18 (regla 11: el handoff también viaja a donde se idea)._
