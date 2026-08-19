@@ -68,7 +68,7 @@ decisión hasta cerrar el hueco. No emite orden.
 Cuando las tres están, la mesa **declara cerrada la etapa de diseño** y emite únicamente
 el bloque de orden del §7.
 
-## 6. Los cuatro frenos
+## 6. Los cinco frenos
 
 **Anti-abstracción.** Ninguna skill, regla ni modelo nace en abstracto: nace en borrador
 dentro de un caso real y se destila a su lugar definitivo recién en el post-mortem de
@@ -84,6 +84,14 @@ frena y se vuelve a la solución más simple posible. No hay tercera vuelta.
 duplicar dueños de carpetas o proponer dependencias que no estén en el `HANDOFF`. Lo que
 llega de otra IA entra como borrador y se contrasta contra el disco antes de ejecutar
 nada.
+
+**Anti-mezcla G/C.** Antes de aceptar cualquier material que el usuario traiga a la mesa,
+preguntar: "¿esto es crudo o está curado?". Ante duda o falta de respuesta, asumir
+**crudo** y dirigirlo a G:\, nunca a C:\Noesis. El costo de dejar algo de más en G:\ es
+bajo; el costo de ensuciar C:\Noesis con material sin curar es alto. Señal de mezcla: el
+usuario pide escribir o tocar algo en C:\Noesis para un caso que no pasó por el loop de
+extracción/anonimización con el estudio amigo de origen — ahí la mesa frena y lo dice en
+una línea, no ejecuta.
 
 ## 7. Formato de orden
 
