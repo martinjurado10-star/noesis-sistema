@@ -1,6 +1,6 @@
 # HANDOFF — dónde estamos
 
-Cierre de la jornada del **2026-08-19** (segunda sesión del día en `00_sistema`).
+Cierre de la jornada del **2026-08-19** (tercera sesión del día en `00_sistema`).
 
 **Para qué sirve este archivo.** Una sesión nueva de Claude Code, sin historial, se lee
 esto primero y sabe exactamente dónde está parado el sistema: qué se hizo, qué hay en
@@ -24,30 +24,38 @@ Este archivo se pisa a sí mismo: lo reescribe la sesión que cierra. No acumula
 
 ## 1. Conclusión primero
 
-**Se agregó el quinto freno a `MESA_DISENO.md`: Anti-mezcla G/C.** La mesa ahora frena
-por texto explícito antes de aceptar material que el usuario trae a la sesión sin decir
-si es crudo o curado — ante duda, se asume crudo y va a `G:\`, nunca a `C:\Noesis`. Orden
-bien formada (objetivo, alcance, criterio de éxito, restricciones), ejecutada en un solo
-paso: sección 6 pasó de "Los cuatro frenos" a "Los cinco frenos", commit `65d83fc`,
-push limpio. **Replicado por MJM en las tres mesas (Gemini, GPT, claude.ai) — confirmado
-en chat.** Nada más se tocó esta sesión.
+**Sesión sin cambios en disco — dos hallazgos de proceso, no de sistema.**
 
-El resto del estado del sistema — modelo Dual-Track, compuerta de entrada (`PROTOCOLO.md`
-§15-16), capa web — sigue exactamente como quedó en el cierre anterior (ver §3 y §4).
-Ningún pendiente de ahí se movió hoy.
+1. Llegó una orden para sacar "Microsoft 365 (Word, Excel)" de la tabla de Prohibidos
+   de `SISTEMA.md` y commitear `SISTEMA.md` + `panel.py` + `CLAUDE.md`. Verificado
+   contra el disco antes de ejecutar (regla 16): ya estaba hecho desde el
+   **2026-08-18**, commit `39f20f5`. `git status` daba árbol limpio y sincronizado.
+   No se ejecutó nada — no había nada que hacer.
+2. Llegó un pedido de navegar `https://example.com` con el MCP de Playwright y
+   resumirla. Se frenó por "fuera de tema de la sesión" — pero el pendiente **4.1.2**
+   de este mismo archivo (ver más abajo, sin cambios) ya lo declaraba tema de
+   `00_sistema`: *"Probar el MCP en una sesión nueva: pedirle que navegue a una
+   página y la resuma. Si conecta y navega, la capa queda estrenada."* El freno fue
+   un error de proceso, no de criterio — está corregido con la regla 17 de
+   `PROTOCOLO.md` (§2 abajo). **El pendiente 4.1.2 sigue sin probarse.**
+
+El resto del estado del sistema — modelo Dual-Track, compuerta de entrada
+(`PROTOCOLO.md` §15-17), capa web — sigue exactamente como quedó en el cierre
+anterior (ver §3 y §4). Ningún pendiente se movió hoy.
 
 ---
 
 ## 2. Qué se hizo en esta jornada
 
-- **`MESA_DISENO.md` §6** — freno #5, Anti-mezcla G/C, agregado a pedido de una orden de
-  mesa con objetivo, alcance (`MESA_DISENO.md` sección "Los cuatro frenos") y criterio de
-  éxito (`git diff` mostrando el freno) explícitos. Verificado anonimato antes de
-  commitear (único cambio: texto de regla, sin nombres de caso ni de cliente). Commit
-  `65d83fc`, push a `origin/main` de `noesis-sistema`.
-- **Cierre de ciclo Mesa → Code confirmado de nuevo**, segunda vez en el mismo día: la
-  mesa emitió la orden bien formada, Code la ejecutó sin redactar doctrina, MJM replicó
-  a mano en las otras dos mesas y confirmó por chat.
+- **Verificación contra disco (regla 16)**: la orden de Office/Prohibidos ya estaba
+  resuelta desde el 2026-08-18 — se reportó sin ejecutar, cero commits de más.
+- **`PROTOCOLO.md` — regla 17 agregada**: *"El pendiente ya declarado no es 'fuera de
+  tema' — cotejar contra el `HANDOFF.md` antes de frenar."* Costó un pedido legítimo
+  rebotado (el pendiente 4.1.2, probar Playwright MCP, llegó formulado casi palabra
+  por palabra y se frenó igual). Commit de este cierre.
+- **Costo informado** (`python costo.py`, hoy 2026-08-19): 9 sesiones, 108.513.727
+  tokens totales, **USD 120,66** de uso dimensionado hoy (no es lo que se paga: hay
+  plan de suscripción con cuota fija). Mes: 19 sesiones, USD 642,61.
 
 ---
 
@@ -73,7 +81,7 @@ G:\Mi unidad\ESTUDIO JURIDICO NOESIS\     C:\Noesis\01_cerebro\skills\<área>\
 
 | Carpeta | Repo en GitHub (privado) | Estado al cierre |
 |---|---|---|
-| `C:\Noesis\00_sistema` | `noesis-sistema` | sincronizado este cierre (`65d83fc`) |
+| `C:\Noesis\00_sistema` | `noesis-sistema` | sincronizado este cierre |
 | `C:\Noesis\00_nucleo` | `noesis` | sin tocar en esta jornada |
 | `C:\Noesis\01_cerebro` | `noesis-legal` | sin tocar en esta jornada (último: `36a79ae`) |
 | `C:\Noesis\10_ingesta` | `noesis-ingesta` | sin tocar en esta jornada |
@@ -96,7 +104,8 @@ Sin cambios: nada de esto se tocó hoy.
 1. **Instalar las cuatro extensiones de Chrome** desde los links de
    `NOESIS_CHROME_STACK.md` (Extensity · PageMarkdown · SingleFile · JSON Formatter).
 2. **Probar el MCP en una sesión nueva** de Claude Code: pedirle que navegue a una
-   página y la resuma. Si conecta y navega, la capa queda estrenada.
+   página y la resuma. Si conecta y navega, la capa queda estrenada. **Sigue sin
+   probarse** — el intento de hoy se frenó por error de proceso (ver §1 y §2).
 
 ### 4.2 El primer Post-Mortem — la prueba real del Dual-Track
 
@@ -160,6 +169,7 @@ Si una sesión nueva propone lo contrario de algo de esta lista, la respuesta ya
 | **Toda orden verifica su criterio de éxito contra el disco antes de ejecutar** (2026-08-19) | la mesa no ve el disco; si el HANDOFF está atrasado, redacta contra la foto vieja |
 | **Cierre sin reescritura de HANDOFF es cierre incompleto** (2026-08-19) | corolario de la regla 10: el commit no cuenta como cerrado hasta que el HANDOFF lo refleje |
 | **Material sin decir si es crudo o curado se trata como crudo, va a `G:\`** (2026-08-19) | freno #5 de la mesa (Anti-mezcla G/C): el costo de sobrar en `G:\` es bajo, el de ensuciar `C:\Noesis` es alto |
+| **Un pendiente ya declarado en el HANDOFF no se frena por "fuera de tema"** (2026-08-19) | regla 17: el pendiente 4.1.2 pedía exactamente "navegar y resumir con el MCP" y se rebotó igual, por no cotejar contra el propio archivo |
 
 ---
 
@@ -168,7 +178,8 @@ Si una sesión nueva propone lo contrario de algo de esta lista, la respuesta ya
 Abrir la carpeta según el tema (`C:\Noesis\00_sistema` para seguir con esto, o
 `C:\Noesis\01_cerebro` cuando haya un caso para destilar), leer este archivo. Lo único
 que sigue pendiente y depende de un clic de MJM: las cuatro extensiones de Chrome y
-probar el MCP navegando una página (§4.1).
+probar el MCP navegando una página (§4.1) — y esta vez, si el pedido coincide con el
+4.1.2, no frenarlo por tema (regla 17).
 
 Al cerrar, el cierre de cinco pasos que es uno solo (regla 10): verificar anonimato →
 **commitear y hacer `push` sin que haga falta pedirlo** → informar el costo
@@ -176,5 +187,6 @@ Al cerrar, el cierre de cinco pasos que es uno solo (regla 10): verificar anonim
 (solo si algo costó) → **reescribir este archivo** y entregarlo por chat como adjunto
 (regla 11).
 
-_Escrito el 2026-08-19. Cierre de la segunda sesión del día en `00_sistema`: agregó el
-freno #5 (Anti-mezcla G/C) a `MESA_DISENO.md`, replicado por MJM en las tres mesas._
+_Escrito el 2026-08-19. Cierre de la tercera sesión del día en `00_sistema`: sin cambios
+de sistema; dos hallazgos de proceso — una orden ya resuelta en disco (regla 16) y un
+freno indebido a un pendiente ya declarado (regla 17 nueva)._

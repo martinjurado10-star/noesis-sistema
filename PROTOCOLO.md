@@ -449,6 +449,23 @@ en el primer paso de cada orden —antes de tocar nada—. La causa de por qué 
 
 ---
 
+## 17. El pendiente ya declarado no es "fuera de tema" — cotejar contra el HANDOFF antes de frenar
+
+**Antes de aplicar la compuerta de "una sesión, un tema" a un pedido, cotejarlo contra
+los pendientes ya declarados en `HANDOFF.md` §4. Si coincide con uno, es del tema — no
+se frena.**
+
+**Por qué está escrita.** El 2026-08-19 el pendiente 4.1.2 de `HANDOFF.md` decía,
+textual: *"Probar el MCP en una sesión nueva de Claude Code: pedirle que navegue a una
+página y la resuma. Si conecta y navega, la capa queda estrenada."* Llegó exactamente
+ese pedido —navegar con el MCP de Playwright y resumir— y se frenó por "no es tema de
+esta sesión", tratándolo como consumo de contenido genérico. El pendiente ya lo había
+declarado tema de `00_sistema` (verificar que la capa web instalada funciona) en el
+mismo archivo que toda sesión lee primero. El costo: un pedido legítimo, ya anticipado
+por el propio sistema, rebotado por no mirar el documento que se supone que se leyó.
+
+---
+
 ## Cómo se suma una regla
 
 Se agrega cuando algo **costó**: un error que se repitió, plata que se fue, una
@@ -456,5 +473,5 @@ sesión que hubo que rehacer. No se agregan buenas intenciones. Formato: qué se
 hace, y abajo **por qué** — el por qué es lo que evita que alguien la deshaga
 dentro de seis meses.
 
-_Última regla sumada: 2026-08-19 (regla 16: verificar antes de ejecutar — el criterio
-de éxito ya viene escrito)._
+_Última regla sumada: 2026-08-19 (regla 17: el pendiente ya declarado no es "fuera de
+tema" — cotejar contra el HANDOFF antes de frenar)._
