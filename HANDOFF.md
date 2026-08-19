@@ -1,6 +1,6 @@
 # HANDOFF — dónde estamos
 
-Cierre de la jornada del **2026-08-19**.
+Cierre de la jornada del **2026-08-19** (segunda sesión del día en `00_sistema`).
 
 **Para qué sirve este archivo.** Una sesión nueva de Claude Code, sin historial, se lee
 esto primero y sabe exactamente dónde está parado el sistema: qué se hizo, qué hay en
@@ -24,189 +24,38 @@ Este archivo se pisa a sí mismo: lo reescribe la sesión que cierra. No acumula
 
 ## 1. Conclusión primero
 
-**El sistema pasó a operar en modo Dual-Track: Operación (Vía 1) y Destilación (Vía 2).**
-La regla es una sola y es dura — *no abstract agent design without case-driven
-distillation*: nada se construye "porque haría falta", todo nace de un caso real y
-después se empaqueta. Quedó escrita en `PROTOCOLO.md` §14 y en el `CLAUDE.md` global,
-con el paso de **Post-Mortem obligatorio antes de archivar** cualquier caso.
+**Se agregó el quinto freno a `MESA_DISENO.md`: Anti-mezcla G/C.** La mesa ahora frena
+por texto explícito antes de aceptar material que el usuario trae a la sesión sin decir
+si es crudo o curado — ante duda, se asume crudo y va a `G:\`, nunca a `C:\Noesis`. Orden
+bien formada (objetivo, alcance, criterio de éxito, restricciones), ejecutada en un solo
+paso: sección 6 pasó de "Los cuatro frenos" a "Los cinco frenos", commit `65d83fc`,
+push limpio. **Replicado por MJM en las tres mesas (Gemini, GPT, claude.ai) — confirmado
+en chat.** Nada más se tocó esta sesión.
 
-**Y se cerró la puerta de entrada** (`PROTOCOLO.md` §15): **Code ejecuta y mapea, no
-idea.** Un pedido de construcción entra sólo con **objetivo funcional + rutas exactas +
-criterio de validación**; si falta alguna, se aborta antes de escribir una línea y se
-deriva a la Mesa de Diseño o al caso activo en `G:`. **Con una excepción escrita en la
-misma regla —Modo Piloto—**: leer el disco, reportar repos y herramientas y proponer el
-próximo paso de este archivo no necesitan directiva previa, porque no construyen nada.
-
-**Y se cerró el pendiente 4.1.** Las dos órdenes que quedaban de la sesión anterior
-—commitear `modelos\` y ratificar `modelos\` en `MEICL-v2.md`— llegaron a ejecutarse
-hoy y ya estaban resueltas en el disco: las dos, en el mismo commit `36a79ae`, pusheado
-desde la sesión que instaló el Dual-Track. Se detectó en Modo Piloto, antes de tocar
-nada, y de ahí sale la lección de la jornada: **`PROTOCOLO.md` §16**, toda orden
-verifica su propio criterio de éxito contra el disco antes de ejecutar, y el corolario
-de la regla 10, cierre sin reescritura de HANDOFF es cierre incompleto. Detalle en el
-bloque E.
-
-Las reglas 14 y 15 son la misma idea por los dos extremos: la 15 filtra lo que entra, la
-14 obliga a que lo que sale deje pieza. La 16 es la tercera pata: verifica que lo que
-entra no esté ya hecho.
-
-**Lo importante: no se creó ninguna topología nueva.** El árbol que pedía la directiva
-(`casos\` + `knowledge\` + `skills\` + `agents\` en la raíz de `C:\Noesis`) ya existía
-casi entero, con otro nombre y del lado correcto del disco. De siete piezas pedidas
-faltaban dos: `modelos\` y el ritual de destilación. Se hicieron esas dos.
-
-**Y se confirmó el circuito de ideación** (pendiente 12, dado de baja): corrió hoy en
-tres sesiones seguidas —dos en `01_cerebro`, una acá— sin que nadie tuviera que
-reconstruir el estado a mano. Ver bloque E.
-
-La capa web sigue como estaba: **falta un clic de MJM por cada extensión de Chrome**, y
-falta estrenar el MCP (§4.1).
-
-**Y se completó `MESA_DISENO.md` §9** (bloque D), que había quedado con el cuerpo cortado
-al pegar. La mesa fijó el texto en su propia sesión (claude.ai) y esta sesión sólo
-aplicó y commiteó — separación de roles del §3 de ese mismo archivo: la mesa no toca la
-máquina, Code no redacta doctrina.
+El resto del estado del sistema — modelo Dual-Track, compuerta de entrada (`PROTOCOLO.md`
+§15-16), capa web — sigue exactamente como quedó en el cierre anterior (ver §3 y §4).
+Ningún pendiente de ahí se movió hoy.
 
 ---
 
 ## 2. Qué se hizo en esta jornada
 
-### Bloque A — Capa de ingestión y navegación web (primera sesión)
-
-- **MCP `playwright`** registrado en la configuración de usuario de Claude Code
-  (sirve en cualquier carpeta; verificar con `claude mcp list` → Connected ✔).
-  Instalado global con npm (`playwright-mcp`). Maneja el **Chrome ya instalado**,
-  no baja otro navegador. Se eligió Playwright y no Puppeteer porque el MCP de
-  Puppeteer está archivado, sin mantenimiento.
-- **`chrome_debug.bat`** (en `00_sistema`, acceso directo **CHROME PARA CLAUDE** en el
-  Escritorio): abre un Chrome visible con el puerto de depuración 9222 y un **perfil
-  aparte** en `%LOCALAPPDATA%\Noesis\chrome_debug` — el perfil personal no se toca, y
-  Chrome moderno además lo exige. Probado en vivo: el puerto respondió (Chrome 151).
-- **`web_a_md.py`** (en `10_ingesta`, mismo dueño que `noesis_ingesta.py`): URL o
-  `.html` capturado → `.md` limpio con fecha de captura. Motor: **trafilatura** (pip).
-  Detalle que importa: la búsqueda extensiva de fechas **se inventó una fecha**
-  (`2026-01-01` en un html sin fecha declarada) — quedó apagada.
-- **`NOESIS_CHROME_STACK.md`**: las cuatro extensiones (Extensity · PageMarkdown ·
-  SingleFile · JSON Formatter), el circuito página→`.md`, y cómo navega Claude.
-- Registrado en `stack.json` (revisión 2026-08-19) y `SISTEMA.md`; regla técnica nueva
-  en `PROTOCOLO.md` (Git Bash convierte `/c` en `C:/`).
-
-### Bloque B — Modelo Dual-Track
-
-Llegó una directiva —formato de tablero, de otra IA— para crear en la raíz de
-`C:\Noesis` un árbol `casos\` + `knowledge\` + `skills\` + `agents\`. **Se frenó antes
-de escribir** (regla: lo que llega de otra IA entra como borrador y se contrasta contra
-el disco). El mapeo pieza por pieza:
-
-| Pedido en `C:\Noesis\` | Dueño real ya existente | Veredicto |
-|---|---|---|
-| `casos/inbox/` | `G:\...\0_ENTRADA` (buzón vigilado por la ingesta) | ya existe |
-| `casos/activos/<id>/` | `G:\...\01_Casos_Activos\` — **9 casos vivos** | ya existe |
-| `casos/cerrados/<id>/` | `G:\...\02_Casos_Archivados\` (vacía, esperando) | ya existe |
-| `knowledge/reglas/` | `skills\<área>\references\` + `scripts\` | ya existe |
-| `knowledge/precedentes/` | `skills\<área>\references\doctrina_*.md` | ya existe |
-| `knowledge/modelos/` | — | **faltaba: creado** |
-| `skills/` en la raíz | `01_cerebro\skills` | ya existe, **y no se duplica** |
-| `agents/` | las skills de área **son** los agentes | ya existe |
-| paso de destilación | — | **faltaba: creado** |
-
-**Por qué no se duplicó `skills\`:** `~/.claude/skills` es un *junction* (atajo a nivel
-de disco) que apunta a `C:\Noesis\01_cerebro\skills`. Una segunda carpeta `skills\` en la
-raíz habría quedado invisible para Claude, y la mitad del trabajo habría ido a parar a
-una carpeta muerta. Verificado en disco antes de decidir.
-
-Lo que efectivamente se escribió:
-
-- **`modelos\` en las tres skills de área** (`concursos-ar`, `liquidar-ar`,
-  `revision-contratos-ar`), cada una con su `LEEME.md`. Cuarta pieza junto a `SKILL.md` /
-  `references\` / `scripts\`. Guarda **plantillas de escritos ya presentados**,
-  parametrizadas con `{{VARIABLES}}` y sin un solo dato de cliente. Las tres empezaron
-  **vacías a propósito**: se llenan por destilación, no de antemano.
-- **`PROTOCOLO.md` §14 — Dual-track: ningún caso se archiva sin destilar.** Las dos vías
-  con su herramienta y su carpeta, la regla anti-abstracción, el **Post-Mortem de cinco
-  preguntas** obligatorio antes de mover un caso a archivados, y los flujos `nuevo_caso` /
-  `destilar_caso` explicados en lenguaje simple.
-- **`CLAUDE.md` global** (`~/.claude/CLAUDE.md`, respaldado en `claude_config\`): sección
-  Dual-Track con la regla en inglés tal como se pidió, la tabla de las dos vías, los dos
-  flujos, y la cuarta pieza `modelos\` sumada a MEICL. Se corrigió además el "siguiente:
-  agente Societario" del bloque Estado — ahora dice explícitamente que **no se arma hasta
-  que haya casos societarios cerrados que lo pidan**.
-
-### Bloque C — Compuerta de ejecución
-
-- **`PROTOCOLO.md` §15 — Code ejecuta y mapea, no idea.** Un pedido de construcción entra
-  sólo con las tres cosas: **objetivo funcional · rutas exactas · criterio de validación**.
-  Si falta cualquiera —o es debate doctrinario, lluvia de ideas, consulta jurídica
-  abstracta o desarrollo sin caso real que lo justifique— se aborta antes de generar
-  código, módulos o abstracciones, y se responden dos líneas fijas que derivan a la Mesa
-  de Diseño (Chat Noesis) o al caso activo en `G:`. Va también en el `CLAUDE.md` global,
-  como primera sección de lo específico de Code: rige en toda carpeta.
-- **La excepción, escrita en la misma regla: Modo Piloto.** Sin directiva previa y siempre
-  permitido, porque es de **sola lectura** y no altera el disco: inspección de estado
-  (`git status`, `git diff`, `git log`) · mapeo de herramientas (`claude mcp list`) ·
-  exploración de directorios y lectura de archivos · **reportar estado y proponer el
-  siguiente paso del `HANDOFF.md`**. La compuerta cierra la puerta de **escribir**, no la
-  de **mirar y orientar**.
-- **Tablero de límites físicos y de arquitectura**, cuatro, en la misma §15 y también en el
-  `CLAUDE.md` global: casos sólo en `G:` · skills y agentes sólo en
-  `01_cerebro\skills\` · contenido pesado al scratchpad antes de copiar · anonimato
-  estricto antes de commitear.
-- **Regla técnica nueva:** un `.md` abierto en **Word** bloquea la escritura (`EPERM` /
-  `Device or resource busy`). De ahí el corolario: **el contenido se redacta primero en
-  el scratchpad y después se copia**, así un bloqueo cuesta un `cp` y no volver a
-  redactar.
-
-### Bloque D — Primer ciclo completo Mesa → Code
-
-- **`MESA_DISENO.md` §9 completado.** El archivo dueño (`C:\Noesis\00_sistema`) tenía el
-  §9 cortado desde que se pegó ayer (5.071 bytes, marca `[PENDIENTE]`); la copia de
-  claude.ai sí tenía el texto entero. La mesa fijó el texto, emitió la orden con objetivo
-  + alcance + criterio de éxito, y esta sesión la ejecutó sin redactar de nuevo:
-  reemplazo literal, `grep -c PENDIENTE` → `0`, `git diff` tocó sólo esas seis líneas,
-  commit `bb75ac4` en `noesis-sistema`, push limpio. **Falta un paso, de MJM:** repegar
-  el archivo completo (ya sin la marca) en las mesas de Gemini y GPT, que probablemente
-  arrastran el mismo corte.
-- **La compuerta de tema (regla 2/`tema_sesion.py`) filtró correctamente una orden ajena.**
-  La mesa emitió también la orden de commitear `modelos\` en `01_cerebro` — bien formada.
-  Se frenó **antes de tocar nada**, porque la carpeta abierta era `00_sistema` y esa
-  orden es de otro repo y otro tema. Se le devolvió a MJM el comando exacto
-  (`cd C:\Noesis\01_cerebro`) para pegarla en la sesión correcta.
-
-### Bloque E — Verificación previa y corolario de cierre
-
-- **Las dos órdenes pendientes ya estaban resueltas.** En sesión de `01_cerebro`, al
-  verificar en Modo Piloto antes de tocar nada, tanto "commitear `modelos\`" como
-  "ratificar `modelos\` en `MEICL-v2.md`" ya estaban en el disco y pusheadas — las dos
-  en el mismo commit `36a79ae` ("MEICL: modelos/ ratificada como cuarta pieza (P11)"),
-  mezcladas entre sí en contra de lo que pedía cada orden por separado (no mezclar con
-  la ratificación del estándar, no tocar `MEICL-v2.md`). Contenido verificado y
-  correcto: `grep` de nombres de caso vacío en los tres `LEEME.md`, `MEICL-v2.md` dueño
-  único de la forma (§6.9), los tres `LEEME.md` remiten sin duplicar texto normativo.
-  **Se decidió no reescribir historia ya pusheada** — el envase quedó distinto al
-  pedido, el resultado no.
-- **La causa se cerró donde corresponde, no donde se detectó.** La mesa redactó las dos
-  órdenes contra este archivo, que a esa altura no reflejaba `36a79ae` — el cierre que
-  terminó en ese commit no lo había reescrito (regla 10). La mesa no ve el disco;
-  redacta sobre el `HANDOFF.md`, y si el `HANDOFF.md` miente, redacta siempre contra la
-  foto vieja. El que sí ve el disco es Code, en Modo Piloto. De ahí:
-  - **`PROTOCOLO.md` §16 — Verificar antes de ejecutar.** Toda orden arranca en Modo
-    Piloto verificando su propio criterio de éxito contra el disco; si ya se cumple, se
-    reporta y no se ejecuta.
-  - **Corolario junto a la regla 10.** Cierre sin reescritura de HANDOFF es cierre
-    incompleto. El commit no se considera cerrado hasta que el HANDOFF lo refleje.
-- **Pendiente 12 (circuito de ideación) confirmado y dado de baja.** El circuito
-  completo —cerrar sesión, `HANDOFF.md` al día, mesa redacta la siguiente orden, Code
-  la ejecuta— corrió hoy en tres sesiones seguidas (`01_cerebro` → `01_cerebro` →
-  `00_sistema`) sin que nadie tuviera que reconstruir el estado a mano. Con una
-  salvedad, que es justo lo que este bloque corrige: el `HANDOFF.md` que alimentó a la
-  mesa estaba un paso atrás del disco. El circuito funciona; lo que faltaba era la
-  regla 16 para que un HANDOFF atrasado no se traduzca en trabajo repetido.
+- **`MESA_DISENO.md` §6** — freno #5, Anti-mezcla G/C, agregado a pedido de una orden de
+  mesa con objetivo, alcance (`MESA_DISENO.md` sección "Los cuatro frenos") y criterio de
+  éxito (`git diff` mostrando el freno) explícitos. Verificado anonimato antes de
+  commitear (único cambio: texto de regla, sin nombres de caso ni de cliente). Commit
+  `65d83fc`, push a `origin/main` de `noesis-sistema`.
+- **Cierre de ciclo Mesa → Code confirmado de nuevo**, segunda vez en el mismo día: la
+  mesa emitió la orden bien formada, Code la ejecutó sin redactar doctrina, MJM replicó
+  a mano en las otras dos mesas y confirmó por chat.
 
 ---
 
 ## 3. Estado real de la estructura
 
-### El Dual-Track en disco, de un vistazo
+Sin cambios respecto del cierre anterior — no se tocó capa web, Dual-Track, ni
+compuerta de entrada esta sesión. Ver el HANDOFF anterior (commit `52ecd41` y previos)
+o directamente `SISTEMA.md` / `PROTOCOLO.md` / `MESA_DISENO.md` para el detalle completo:
 
 ```
 VÍA 1 — OPERACIÓN (papeles, Drive)        VÍA 2 — DESTILACIÓN (motor, C:)
@@ -220,24 +69,15 @@ G:\Mi unidad\ESTUDIO JURIDICO NOESIS\     C:\Noesis\01_cerebro\skills\<área>\
               (PROTOCOLO.md §14 — antes de archivar)
 ```
 
-Las tres skills de área tienen la misma anatomía. Hay además **una skill de caso** con
-prefijo `caso-`: fuera de git por patrón, no participa de esto y no se nombra acá (P10).
-
 ### Los repositorios: cinco, cada uno con dueño y remoto
 
 | Carpeta | Repo en GitHub (privado) | Estado al cierre |
 |---|---|---|
-| `C:\Noesis\00_sistema` | `noesis-sistema` | sincronizado este cierre |
+| `C:\Noesis\00_sistema` | `noesis-sistema` | sincronizado este cierre (`65d83fc`) |
 | `C:\Noesis\00_nucleo` | `noesis` | sin tocar en esta jornada |
-| `C:\Noesis\01_cerebro` | `noesis-legal` | sincronizado (commit `36a79ae`, ver bloque E) |
-| `C:\Noesis\10_ingesta` | `noesis-ingesta` | sincronizado en el bloque A |
+| `C:\Noesis\01_cerebro` | `noesis-legal` | sin tocar en esta jornada (último: `36a79ae`) |
+| `C:\Noesis\10_ingesta` | `noesis-ingesta` | sin tocar en esta jornada |
 | `...\GitHub\LEGALENGINE-CONCURSOS-QUIEBRAS` | mismo nombre | prototipo, sin revisar |
-
-Chequeo de los cuatro antes de cerrar una sesión que toque código:
-
-```bash
-for d in 00_nucleo 00_sistema 01_cerebro 10_ingesta; do cd "/c/Noesis/$d" && echo "$d: $(git remote | head -1 || echo SIN-REMOTO) $(git status -sb | head -1)"; done
-```
 
 ### Lo que a propósito no se versiona
 
@@ -245,21 +85,16 @@ for d in 00_nucleo 00_sistema 01_cerebro 10_ingesta; do cd "/c/Noesis/$d" && ech
 `99_experimentos` (motores pesados) · `02_marketplace` (sin dueño declarado) ·
 el perfil `%LOCALAPPDATA%\Noesis\chrome_debug` (cookies y sesiones: nunca a un repo).
 
-### `~/.claude` — respaldada, con criterio
-
-`claude_config\` (en `00_sistema`) versiona solo lo hecho a mano (`settings.json`,
-`CLAUDE.md` global). El resto es cache o transcripciones con datos de clientes.
-El `CLAUDE.md` global con la sección Dual-Track ya quedó respaldado en esta sesión.
-
 ---
 
 ## 4. Pendientes, en orden
+
+Sin cambios: nada de esto se tocó hoy.
 
 ### 4.1 Inmediato — un clic de MJM cada uno
 
 1. **Instalar las cuatro extensiones de Chrome** desde los links de
    `NOESIS_CHROME_STACK.md` (Extensity · PageMarkdown · SingleFile · JSON Formatter).
-   Claude no instala extensiones: el clic es de MJM.
 2. **Probar el MCP en una sesión nueva** de Claude Code: pedirle que navegue a una
    página y la resuma. Si conecta y navega, la capa queda estrenada.
 
@@ -267,7 +102,6 @@ El `CLAUDE.md` global con la sección Dual-Track ya quedó respaldado en esta se
 
 3. **Estrenar `destilar_caso` con el primer caso que cierre.** Hay 9 casos activos en
    Drive y `02_Casos_Archivados` está vacía: ninguno pasó todavía por el paso nuevo.
-   Hasta que uno lo haga, la regla 14 es doctrina sin rodaje —y `modelos\` sigue vacía.
    **Este es el pendiente que desbloquea todo lo demás de la Vía 2.**
 
 ### 4.3 Fase 2
@@ -278,17 +112,13 @@ El `CLAUDE.md` global con la sección Dual-Track ya quedó respaldado en esta se
 6. **Jubilar los circuitos viejos de conversión**: `99_experimentos\marker_pdfs` y
    `Downloads\Noesis`.
 7. **Cotejar las cuatro carpetas duplicadas** Escritorio ↔ Drive. Drive manda.
-   Detalle fuera del repo, en `_local_pendientes.md`.
-8. **Ficha del adaptador de Marker** (constitución §8). Ahora también la pide
-   trafilatura si se consolida como pieza estructural.
-9. **Revisar el prototipo `LEGALENGINE-CONCURSOS-QUIEBRAS`** — contenido jurídico:
-   sesión de `01_cerebro`, no acá.
+8. **Ficha del adaptador de Marker** (constitución §8).
+9. **Revisar el prototipo `LEGALENGINE-CONCURSOS-QUIEBRAS`** — sesión de `01_cerebro`.
 
 ### 4.4 Fase 3
 
-10. **MCP local propio en Python para cálculos determinísticos** (liquidar, intereses,
-    plazos). Antes de la primera línea: definir dueño (`00_sistema` o `01_cerebro`) y
-    declararlo en `SISTEMA.md`. Local, sin nube, sin placa de video.
+10. **MCP local propio en Python para cálculos determinísticos.** Antes de la primera
+    línea: definir dueño (`00_sistema` o `01_cerebro`) y declararlo en `SISTEMA.md`.
 11. **Renombrar `99_experimentos`** — el día que haya que tocar Marker por otro motivo.
 
 ---
@@ -324,11 +154,12 @@ Si una sesión nueva propone lo contrario de algo de esta lista, la respuesta ya
 | **No hay segunda carpeta `skills\`** (2026-08-19) | `~/.claude/skills` es un junction a `01_cerebro\skills`; una homónima queda invisible para Claude |
 | **Un agente por materia se abre al final, no al principio** (2026-08-19) | primero masa crítica de casos cerrados que destilaron fichas; la carpeta vacía finge que el área existe |
 | **Ningún caso se archiva sin Post-Mortem** (2026-08-19) | es el único momento en que el dato del caso y la pieza reutilizable están en la misma mesa |
-| **Code ejecuta y mapea, no idea** (2026-08-19) | sin objetivo + rutas exactas + criterio de validación, el pedido no tiene forma de terminar: es la sesión de 939 turnos vista desde su causa |
-| **El Modo Piloto no necesita directiva** (2026-08-19) | leer disco, `git status`, `claude mcp list` y proponer el próximo paso no construyen nada; la compuerta cierra la puerta de escribir, no la de mirar |
+| **Code ejecuta y mapea, no idea** (2026-08-19) | sin objetivo + rutas exactas + criterio de validación, el pedido no tiene forma de terminar |
+| **El Modo Piloto no necesita directiva** (2026-08-19) | leer disco, `git status`, `claude mcp list` y proponer el próximo paso no construyen nada |
 | **Los `.md` se redactan en el scratchpad y se copian** (2026-08-19) | Word los bloquea en exclusiva; así un bloqueo cuesta un `cp` y no volver a redactar |
-| **Toda orden verifica su criterio de éxito contra el disco antes de ejecutar** (2026-08-19) | la mesa no ve el disco; si el HANDOFF está atrasado, redacta contra la foto vieja — el que verifica es Code, en Modo Piloto |
+| **Toda orden verifica su criterio de éxito contra el disco antes de ejecutar** (2026-08-19) | la mesa no ve el disco; si el HANDOFF está atrasado, redacta contra la foto vieja |
 | **Cierre sin reescritura de HANDOFF es cierre incompleto** (2026-08-19) | corolario de la regla 10: el commit no cuenta como cerrado hasta que el HANDOFF lo refleje |
+| **Material sin decir si es crudo o curado se trata como crudo, va a `G:\`** (2026-08-19) | freno #5 de la mesa (Anti-mezcla G/C): el costo de sobrar en `G:\` es bajo, el de ensuciar `C:\Noesis` es alto |
 
 ---
 
@@ -341,10 +172,9 @@ probar el MCP navegando una página (§4.1).
 
 Al cerrar, el cierre de cinco pasos que es uno solo (regla 10): verificar anonimato →
 **commitear y hacer `push` sin que haga falta pedirlo** → informar el costo
-(`python costo.py`) → sumar a `PROTOCOLO.md` la regla que haya dejado la sesión →
-**reescribir este archivo** y entregarlo por chat como adjunto (regla 11).
+(`python costo.py`) → sumar a `PROTOCOLO.md` la regla que haya dejado la sesión
+(solo si algo costó) → **reescribir este archivo** y entregarlo por chat como adjunto
+(regla 11).
 
-_Escrito el 2026-08-19. Cierre de la sesión que instaló el modelo Dual-Track (bloques
-A-C), corrió el primer ciclo completo Mesa → Code sobre `MESA_DISENO.md` §9 (bloque D),
-y constató que las dos órdenes de §4.1 ya estaban resueltas, dejando como saldo
-`PROTOCOLO.md` §16 y el corolario de la regla 10 (bloque E)._
+_Escrito el 2026-08-19. Cierre de la segunda sesión del día en `00_sistema`: agregó el
+freno #5 (Anti-mezcla G/C) a `MESA_DISENO.md`, replicado por MJM en las tres mesas._
