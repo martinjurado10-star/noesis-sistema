@@ -26,26 +26,37 @@ ideación conceptual ni consultorio jurídico abstracto. Un pedido de construcci
 sólo si trae las tres cosas: **objetivo funcional** · **restricciones y límites (rutas
 exactas)** · **criterio de validación**.
 
-Si falta cualquiera —o es un debate doctrinario, una lluvia de ideas, una consulta
-jurídica abstracta, o desarrollo **sin un caso real que lo justifique**— **abortar antes
-de generar código, módulos o abstracciones** y responder exactamente estas dos líneas,
-sin agregar nada:
+Se aborta —**antes de escribir una sola línea de código o crear un archivo**— ante: una
+consulta jurídica abstracta o debate doctrinario · una lluvia de ideas o propuesta
+arquitectónica sin esquema resuelto · una skill o agente pedido "por si acaso", sin caso
+real de origen · una instrucción ambigua, sin rutas explícitas ni criterio de prueba. La
+respuesta es exactamente ésta, sin agregar nada:
 
 ```
-Falta especificación técnica estructurada / diseño conceptual previo.
-Definir primero el QUÉ en la Mesa de Diseño (Chat Noesis) o resolverlo en el caso
-activo en G:\ antes de codificar.
+Pedido no maduro para ejecución técnica (falta objetivo, rutas o criterio de validación).
+Por favor derivar a la Mesa de Diseño (Chat Noesis) o estructurar sobre un caso activo en G:\
 ```
 
-**Excepción operativa — Modo Piloto.** Sin directiva previa y siempre permitido, porque
-no construye nada: **leer el disco** · **estado de los repos** (`git status`) ·
-**verificar herramientas** (`claude mcp list`) · **proponer el siguiente paso del
-`HANDOFF.md`**. La compuerta cierra la puerta de escribir, no la de mirar y orientar.
+**Excepción — Modo Piloto.** Sin directiva previa y siempre permitido, porque es de sola
+lectura y no altera el disco: **inspección de estado** (`git status`, `git diff`,
+`git log`) · **mapeo de herramientas** (`claude mcp list`) · **exploración de directorios
+y lectura de archivos** · **reportar estado y proponer el siguiente paso del
+`HANDOFF.md`**. La compuerta cierra la puerta de **escribir**, no la de **mirar y
+orientar**.
 
 **El otro límite:** las dos líneas son para lo que **no se puede ejecutar**, no para lo
 que **se puede ejecutar distinto**. Si el pedido es ejecutable pero su topología choca con
 lo que ya hay en disco, corresponde el mapeo pieza por pieza y después ejecutar lo que
 falta — no el rechazo. Detalle en `00_sistema\PROTOCOLO.md` §15.
+
+### Límites físicos que no se negocian en ninguna sesión
+
+| Límite | En una línea |
+|---|---|
+| **Casos y expedientes** | viven **sólo** en `G:\...`; prohibido crear o mover carpetas de casos a `C:\` |
+| **Skills y agentes** | único contenedor: `C:\Noesis\01_cerebro\skills\` (junction desde `~/.claude/skills`). Prohibido crear `skills\`, `agents\` o `knowledge\` en la raíz de `C:\` |
+| **Anti-bloqueo (`EPERM`)** | contenido pesado se redacta en el scratchpad y **después** se copia a disco (Word bloquea los `.md`) |
+| **Anonimato estricto** | jamás commitear datos de clientes a un repo — se verifica **antes**, no después |
 
 ---
 

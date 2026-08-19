@@ -352,25 +352,43 @@ justifique** (regla 14)— **se aborta antes de generar código, módulos o abst
 y se responde exactamente esto, en dos líneas:
 
 ```
-Falta especificación técnica estructurada / diseño conceptual previo.
-Definir primero el QUÉ en la Mesa de Diseño (Chat Noesis) o resolverlo en el caso
-activo en G:\ antes de codificar.
+Pedido no maduro para ejecución técnica (falta objetivo, rutas o criterio de validación).
+Por favor derivar a la Mesa de Diseño (Chat Noesis) o estructurar sobre un caso activo en G:\
 ```
+
+Cae en el aborto, en concreto: la consulta jurídica abstracta o el debate doctrinario · la
+lluvia de ideas o propuesta arquitectónica sin esquema resuelto · la skill o el agente
+pedido "por si acaso", sin caso real de origen (regla 14) · la instrucción ambigua, sin
+rutas explícitas ni criterio de prueba.
 
 ### La excepción: Modo Piloto
 
-**Sin directiva previa, y siempre permitido**, porque no construye nada:
+**Sin directiva previa, y siempre permitido**, porque es de sola lectura y no altera el
+disco:
 
-- **leer el disco** y reportar lo que hay
-- **estado de los repositorios** (`git status`, el chequeo de los cuatro de la regla 8)
-- **verificar herramientas** (`claude mcp list`, versiones, qué está instalado)
-- **proponer el siguiente paso del `HANDOFF.md`**
+- **inspección de estado:** `git status`, `git diff`, `git log`
+- **mapeo de herramientas:** `claude mcp list`, versiones, qué está instalado
+- **exploración de directorios y lectura de archivos**
+- **reportar el estado del sistema y proponer el siguiente paso del `HANDOFF.md`**
 
 Ésta es la mitad "mapeador de disco" del rol. La compuerta cierra la puerta de
 **escribir**, no la de **mirar y orientar**. Un Claude que no puede decir en qué estado
 está la máquina ni cuál es el próximo paso no es más seguro: es sólo más mudo, y obliga a
 MJM a llevar el estado del sistema en la cabeza — que es justo lo que el `HANDOFF.md`
 existe para evitar.
+
+### Límites físicos y de arquitectura — el tablero
+
+Cuatro cosas que no se negocian en ninguna sesión. **Ninguna nace acá**: cada una tiene su
+dueño y su *por qué* en otro lado, y esto es el tablero para tenerlas juntas a la vista
+(regla 3 — se corrigen en el dueño, no en esta tabla).
+
+| Límite | En una línea | Dueño |
+|---|---|---|
+| **Casos y expedientes** | viven **sólo** en `G:\...`; prohibido crear o mover carpetas de casos a `C:\` | regla de oro (`00_LEEME.md`) + §14 |
+| **Skills y agentes** | único contenedor válido: `C:\Noesis\01_cerebro\skills\`. Prohibido crear `skills\`, `agents\` o `knowledge\` en la raíz de `C:\` | el junction (`CLAUDE.md` global) |
+| **Anti-bloqueo (`EPERM`)** | contenido pesado se redacta en el scratchpad y **después** se copia a disco | reglas técnicas, abajo |
+| **Anonimato estricto** | jamás commitear datos de clientes a un repo | regla 7 + P10 |
 
 ### Los dos límites que la compuerta no cruza
 
