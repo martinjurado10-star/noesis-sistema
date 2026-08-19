@@ -14,6 +14,7 @@ disco, qué falta y en qué orden, y qué ya se decidió y no se vuelve a discut
 | `PROTOCOLO.md` | cómo se trabaja con Claude acá | ante dudas de flujo |
 | `INVENTARIO.md` | la foto de la máquina medida el 2026-08-18 | para cotejar diseño contra realidad |
 | `NOESIS_CHROME_STACK.md` | la capa web: extensiones, circuito de ingesta web, navegación por Claude | al tocar Chrome o la ingesta web |
+| `MESA_DISENO.md` | la instrucción de la mesa de diseño: cómo se piensa una orden antes de llegar a la terminal | antes de abrir una mesa — proyecto de claude.ai, gem o GPT |
 | **`HANDOFF.md`** (este) | **dónde quedamos** | **al abrir una sesión nueva — y en el proyecto de claude.ai donde se idea (regla 11)** |
 
 Este archivo se pisa a sí mismo: lo reescribe la sesión que cierra. No acumula historia

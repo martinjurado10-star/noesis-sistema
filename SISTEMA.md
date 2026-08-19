@@ -223,7 +223,7 @@ sin subir el documento a ningún sitio web.
 
 | Superficie | Alcance | Para qué |
 |---|---|---|
-| **Chat** (claude.ai) | sin archivos | pensar, dudas sueltas |
+| **Chat** (claude.ai) | sin archivos | pensar, dudas sueltas — y **la mesa de diseño**, cuya instrucción es `MESA_DISENO.md` |
 | **Cowork** | carpetas locales, un proyecto por caso | **producir escritos** sobre un expediente |
 | **Claude Code** | disco + git | **construir**: el motor legal, la máquina, los programas |
 
