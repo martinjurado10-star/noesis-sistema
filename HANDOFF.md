@@ -121,11 +121,19 @@ Lo que efectivamente se escribió:
   de Diseño (Chat Noesis) o al caso activo en `G:`. Va también en el `CLAUDE.md` global,
   como primera sección de lo específico de Code: rige en toda carpeta.
 - **La excepción, escrita en la misma regla: Modo Piloto.** Sin directiva previa y siempre
-  permitido, porque no construye nada: leer el disco · `git status` · `claude mcp list` ·
-  **proponer el siguiente paso del `HANDOFF.md`**. La compuerta cierra la puerta de
-  **escribir**, no la de **mirar y orientar**. Sin esto, Claude no podría decir en qué
-  estado está la máquina ni cuál es el próximo paso, y el estado del sistema volvería a la
-  cabeza de MJM — justo lo que este archivo existe para evitar.
+  permitido, porque es de **sola lectura** y no altera el disco: inspección de estado
+  (`git status`, `git diff`, `git log`) · mapeo de herramientas (`claude mcp list`) ·
+  exploración de directorios y lectura de archivos · **reportar estado y proponer el
+  siguiente paso del `HANDOFF.md`**. La compuerta cierra la puerta de **escribir**, no la
+  de **mirar y orientar**. Sin esto, Claude no podría decir en qué estado está la máquina
+  ni cuál es el próximo paso, y el estado del sistema volvería a la cabeza de MJM — justo
+  lo que este archivo existe para evitar.
+- **Tablero de límites físicos y de arquitectura**, cuatro, en la misma §15 y también en el
+  `CLAUDE.md` global: casos sólo en `G:` · skills y agentes sólo en
+  `01_cerebro\skills\` · contenido pesado al scratchpad antes de copiar · anonimato
+  estricto antes de commitear. **Ninguno nace ahí:** los cuatro ya tenían dueño y el
+  tablero remite a cada uno en vez de copiarlo, para no repetir el error de `stack.json`
+  —dos copias de la misma verdad— que la regla 3 existe para impedir.
 - **Por qué la excepción está desde el día uno.** La primera redacción de la §15 sólo
   tenía la parte que rechaza. Con ese texto, la directiva que originó el bloque B —sin
   rutas exactas ni criterio de validación— habría rebotado en dos líneas, y no existirían
