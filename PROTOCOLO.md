@@ -222,6 +222,29 @@ construir algo nuevo, revisar el Escritorio.**
   nombre del binario se verifica en la carpeta de npm, no se adivina: el paquete
   `@playwright/mcp` instala `playwright-mcp`, no `mcp-server-playwright`.
 
+## 13. Dos correcciones y se frena
+
+Si una instrucción, un script o una corrección **falla dos veces seguidas en la
+misma sesión**, se aborta la iteración ahí mismo. Está prohibido seguir
+explicando o parchando sobre un contexto ya contaminado.
+
+Lo que se hace en su lugar, obligatorio: **frenar, resumir el bloqueo en tres
+líneas** y elegir una de dos salidas — reiniciar el contexto (`/clear`, con el
+aprendizaje ya escrito) o plantear una vía alternativa determinística.
+
+**Por qué está escrita.** Cuando un intento falla, el historial queda lleno de
+enfoques equivocados, y el intento siguiente los relee todos como si fueran
+antecedentes válidos. La tercera corrección no parte de cero: parte de dos
+errores. Por eso el gasto sube mientras la probabilidad de acertar baja — es la
+regla 9 vista desde adentro de un problema puntual.
+
+**El corolario que ya se pagó una vez:** cuando lo que falta es un dato o un
+archivo, frenar y preguntar **no es la salida lenta, es la única**. El
+2026-08-19, con Drive desmontado, una instrucción decía "copialo desde su origen
+o crealo" — y crear ese archivo habría reemplazado la fuente única por una
+invención, dejando la copia falsa gobernando sobre la real. **Un archivo que no
+se puede leer no se inventa: se espera o se pregunta.**
+
 ---
 
 ## Cómo se suma una regla
@@ -231,4 +254,4 @@ sesión que hubo que rehacer. No se agregan buenas intenciones. Formato: qué se
 hace, y abajo **por qué** — el por qué es lo que evita que alguien la deshaga
 dentro de seis meses.
 
-_Última regla sumada: 2026-08-18 (regla 12: lo que se usa seguido va al Escritorio)._
+_Última regla sumada: 2026-08-19 (regla 13: dos correcciones y se frena)._
