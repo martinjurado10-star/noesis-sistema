@@ -118,6 +118,23 @@ El diagnóstico está en el medidor, no en un script aparte (regla 3):
 python costo.py --piso
 ```
 
+## 10. El handoff se escribe antes de cerrar
+
+La sesión que cierra reescribe el `HANDOFF.md` de la carpeta del tema con cuatro
+cosas y nada más: **qué se hizo · el estado real · qué queda y en qué orden · las
+decisiones que ya no se discuten.** Se pisa a sí mismo: no acumula historia —esa
+está en los commits— sino el presente. Y es lo primero que se lee al abrir.
+
+**Por qué está escrita.** Claude no lee sesiones anteriores: cada sesión nueva
+arranca sin saber nada de la anterior (regla 1). El 2026-08-18 hubo que
+reconstruir la jornada entera desde los commits, el disco y los registros de las
+sesiones del día para poder cerrarla. Salió bien, pero se pagó dos veces: una al
+hacer el trabajo y otra al averiguar qué se había hecho. **Escribirlo cuesta una
+vez; reconstruirlo, cada vez.**
+
+Escribirlo es del cierre, junto con el costo (regla 6) y la regla nueva si la
+hubo. Los tres pasos son uno solo y van en ese orden.
+
 ---
 
 ## Reglas técnicas ganadas a golpes
@@ -149,4 +166,4 @@ sesión que hubo que rehacer. No se agregan buenas intenciones. Formato: qué se
 hace, y abajo **por qué** — el por qué es lo que evita que alguien la deshaga
 dentro de seis meses.
 
-_Última regla sumada: 2026-08-18 (regla 9: el piso y los turnos)._
+_Última regla sumada: 2026-08-18 (regla 10: el handoff antes de cerrar)._

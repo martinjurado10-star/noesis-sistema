@@ -16,8 +16,24 @@ import os, re, sys, json, socket, datetime, subprocess, webbrowser, winreg
 from pathlib import Path
 
 BASE    = Path(__file__).parent
-INGESTA = Path(r"C:\Noesis\10_ingesta")
+NOESIS  = Path(r"C:\Noesis")
+INGESTA = NOESIS / "10_ingesta"
+SKILLS  = NOESIS / "01_cerebro" / "skills"
+MERCADO = NOESIS / "02_marketplace"
 SALIDA  = BASE / "panel.html"
+
+# El mapa de carpetas. Fuente: SISTEMA.md, seccion "Las carpetas".
+# Si esta tabla y SISTEMA.md se desacoplan, manda SISTEMA.md (regla 3: un solo dueno).
+CARPETAS = [
+    {"ruta": NOESIS / "00_nucleo",       "que": "metodo y constitucion",           "git": True},
+    {"ruta": NOESIS / "00_sistema",      "que": "este diseno y la instalacion de todo", "git": True},
+    {"ruta": NOESIS / "_contexto",       "que": "perfil de MJM y manual de uso",   "git": False},
+    {"ruta": NOESIS / "01_cerebro",      "que": "las skills, versionadas en git",  "git": True},
+    {"ruta": MERCADO,                    "que": "plugins que se distribuyen",      "git": False},
+    {"ruta": INGESTA,                    "que": "conversion automatica de papeles a texto", "git": True},
+    {"ruta": NOESIS / "99_experimentos", "que": "motores pesados — anexo, no toca la matriz", "git": False},
+    {"ruta": Path(r"G:\Mi unidad\ESTUDIO JURIDICO NOESIS"), "que": "los papeles: casos, contable, personal", "git": False},
+]
 
 
 # ============================================================
@@ -137,6 +153,112 @@ def pendientes():
     return [re.sub(r"[*`~]|\[|\]\(.*?\)", "", i).strip() for i in items]
 
 
+def remoto_git(ruta):
+    """Si el repo tiene remoto configurado. None si no se pudo saber.
+    git remote no toca la red: solo lee la configuracion local (protocolo, regla 8)."""
+    try:
+        r = subprocess.run(["git", "-C", str(ruta), "remote"],
+                           capture_output=True, text=True, timeout=10)
+        if r.returncode != 0:
+            return None
+        return bool(r.stdout.strip())
+    except Exception:
+        return None
+
+
+def carpetas():
+    """El mapa de carpetas contra el disco real: que hay declarado y que existe de verdad."""
+    filas = []
+    for c in CARPETAS:
+        existe = c["ruta"].exists()
+        remoto = remoto_git(c["ruta"]) if c["git"] and existe else None
+        filas.append({**c, "existe": existe, "remoto": remoto})
+    return filas
+
+
+def carpetas_sueltas():
+    """Carpetas de primer nivel en C:\\Noesis que no estan en el mapa declarado.
+    No se borran solas: se listan para que MJM decida (regla 5, nombres que se
+    entienden solos — una carpeta sin dueno declarado es la misma deuda)."""
+    declaradas = {c["ruta"].name for c in CARPETAS if str(c["ruta"]).upper().startswith("C:")}
+    sueltas = []
+    if not NOESIS.exists():
+        return sueltas
+    for d in sorted(NOESIS.iterdir()):
+        if not d.is_dir() or d.name in declaradas or d.name.startswith("."):
+            continue
+        try:
+            vacia = not any(d.rglob("*"))
+        except Exception:
+            vacia = False
+        sueltas.append({"nombre": d.name, "vacia": vacia})
+    return sueltas
+
+
+def _leer_frontmatter(texto):
+    """Parser tolerante del encabezado YAML de un SKILL.md: alcanza con name y
+    description, en los tres formatos que se usan aca (linea plana, entre
+    comillas, o bloque plegado '>-'). No es un parser YAML completo a proposito:
+    el conocimiento no vive en scripts genericos, vive en las fichas (MEICL)."""
+    m = re.match(r"^---\s*\n(.*?)\n---\s*\n", texto, re.S)
+    if not m:
+        return {}
+    lineas, campos, i = m.group(1).split("\n"), {}, 0
+    while i < len(lineas):
+        mm = re.match(r"^(\w+):\s*(.*)$", lineas[i])
+        if not mm:
+            i += 1
+            continue
+        clave, resto = mm.group(1), mm.group(2).strip()
+        if resto in (">-", ">", "|-", "|"):
+            partes, i = [], i + 1
+            while i < len(lineas) and (lineas[i].startswith("  ") or not lineas[i].strip()):
+                if lineas[i].strip():
+                    partes.append(lineas[i].strip())
+                i += 1
+            campos[clave] = " ".join(partes)
+            continue
+        if len(resto) >= 2 and resto[0] == resto[-1] and resto[0] in "\"'":
+            resto = resto[1:-1]
+        campos[clave] = resto
+        i += 1
+    return campos
+
+
+def skills_locales():
+    """Recorre 01_cerebro/skills: una fila por skill, con su tipo (area/caso),
+    descripcion corta y cuantas piezas de conocimiento/calculo tiene."""
+    filas = []
+    if not SKILLS.exists():
+        return filas
+    for d in sorted(SKILLS.iterdir()):
+        f = d / "SKILL.md"
+        if not d.is_dir() or not f.exists():
+            continue
+        meta = _leer_frontmatter(f.read_text(encoding="utf-8"))
+        desc = meta.get("description", "").strip()
+        if len(desc) > 170:
+            desc = desc[:167].rstrip() + "..."
+        filas.append({
+            "nombre": meta.get("name", d.name),
+            "descripcion": desc,
+            "caso": d.name.startswith("caso-"),
+            "referencias": len(list((d / "references").glob("*"))) if (d / "references").exists() else 0,
+            "scripts": len(list((d / "scripts").glob("*.py"))) if (d / "scripts").exists() else 0,
+            "evals": (d / "evals").exists(),
+        })
+    return filas
+
+
+def marketplace():
+    """02_marketplace hoy esta vacio a proposito (00_LEEME.md). Cuenta que hay
+    puesto ahi de verdad, mas alla del README."""
+    if not MERCADO.exists():
+        return {"existe": False, "vacio": True}
+    archivos = [p for p in MERCADO.rglob("*") if p.is_file() and p.name != "README.md"]
+    return {"existe": True, "vacio": not archivos}
+
+
 # ============================================================
 #  La pagina
 # ============================================================
@@ -200,12 +322,24 @@ ul.pend{margin:0;padding-left:20px} ul.pend li{margin-bottom:11px;font-size:14.5
 footer{margin-top:32px;color:var(--suave);font-size:13px;text-align:center}
 code{background:var(--fondo);border:1px solid var(--borde);border-radius:5px;
   padding:2px 6px;font-size:13px}
+.marca.git-si{color:var(--acento);font-size:11px}
+.badge{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+  padding:2px 8px;border-radius:999px;flex:none}
+.badge.area{color:var(--acento);background:var(--ok-f);border:1px solid var(--acento)}
+.badge.caso{color:var(--aviso);background:var(--aviso-f);border:1px solid var(--aviso)}
+.skill{padding:14px 0;border-bottom:1px solid var(--borde)}
+.skill:last-child{padding-bottom:0;border-bottom:0}
+.skill-tit{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.skill-tit b{font-size:15px}
+.skill-desc{color:var(--suave);font-size:13.5px;line-height:1.5;margin:7px 0 0}
+.skill-meta{color:var(--suave);font-size:12px;margin-top:6px}
 """
 
 
 def html(datos):
-    st, loc, srv, pr, hw, ing, pend = (
-        datos[k] for k in ("stack", "local", "servicios", "prohibidos", "hw", "ingesta", "pendientes"))
+    st, loc, srv, pr, hw, ing, pend, carp, sueltas, skl, merc = (
+        datos[k] for k in ("stack", "local", "servicios", "prohibidos", "hw", "ingesta",
+                            "pendientes", "carpetas", "sueltas", "skills", "marketplace"))
     faltan = [x for x in st if not x["hay"]] + [x for x in loc if not x["hay"]]
     sobran = [x for x in pr if x["hay"]]
     limpio = not faltan and not sobran
@@ -245,6 +379,47 @@ def html(datos):
                      f'Para verlos: <code>python noesis_ingesta.py --pendientes</code></div>')
 
     lista_pend = "".join(f"<li>{p}</li>" for p in pend) or "<li>Nada pendiente.</li>"
+
+    def marca_carpeta(c):
+        if not c["existe"]:
+            return '<span class="marca no">!</span>'
+        if c["remoto"] is True:
+            return '<span class="marca git-si" title="con remoto">&#9679;</span>'
+        if c["remoto"] is False:
+            return '<span class="marca no" title="SIN REMOTO">!</span>'
+        return '<span class="marca si">OK</span>'
+
+    filas_carpetas = "".join(
+        f'<div class="fila">{marca_carpeta(c)}'
+        f'<span class="que"><code>{c["ruta"]}</code></span>'
+        f'<span class="porque">{c["que"]}'
+        f'{" — SIN REMOTO" if c["git"] and c["existe"] and c["remoto"] is False else ""}'
+        f'</span></div>' for c in carp)
+
+    vacias = [s["nombre"] for s in sueltas if s["vacia"]]
+    aviso_sueltas = (
+        f'<div class="nota">{len(vacias)} carpeta(s) vacía(s) y sin dueño en este mapa: '
+        f'{", ".join(f"<code>{n}</code>" for n in vacias)}. Candidatas a borrar o a '
+        f'declarar en <code>SISTEMA.md</code>.</div>') if vacias else ""
+
+    def fila_skill(s):
+        badge = ('<span class="badge caso">Caso — privado</span>' if s["caso"]
+                 else '<span class="badge area">Área</span>')
+        meta = (f'{s["referencias"]} ficha(s) de conocimiento · {s["scripts"]} script(s) de cálculo'
+                f'{" · con evals" if s["evals"] else ""}')
+        return (f'<div class="skill"><div class="skill-tit"><b>{s["nombre"]}</b>{badge}</div>'
+                f'<div class="skill-desc">{s["descripcion"] or "(sin descripción en el frontmatter)"}</div>'
+                f'<div class="skill-meta">{meta}</div></div>')
+
+    filas_skills = "".join(fila_skill(s) for s in skl) or "<p>Todavía no hay skills en <code>01_cerebro/skills</code>.</p>"
+    n_area = sum(1 for s in skl if not s["caso"])
+    n_caso = sum(1 for s in skl if s["caso"])
+
+    nota_mercado = (
+        '<div class="nota">Vacío a propósito: todavía no se empaquetó ninguna skill como plugin '
+        'distribuible (00_LEEME.md).</div>' if merc["vacio"] else
+        '<div class="nota" style="background:var(--ok-f);color:var(--ok);border-color:var(--ok)">'
+        'Tiene contenido más allá del README — revisar qué se publicó.</div>')
 
     return f"""<!doctype html>
 <html lang="es"><head><meta charset="utf-8">
@@ -338,6 +513,26 @@ def html(datos):
       <h2>Pendientes</h2>
       <ul class="pend">{lista_pend}</ul>
     </div>
+
+    <div class="tarjeta ancho">
+      <h2>Mapa de carpetas &middot; quién es el dueño de cada cosa</h2>
+      {filas_carpetas}
+      {aviso_sueltas}
+    </div>
+
+    <div class="tarjeta ancho">
+      <h2>Skills &middot; lo que construimos en 01_cerebro</h2>
+      {filas_skills}
+    </div>
+
+    <div class="tarjeta">
+      <h2>Marketplace &middot; plugins que se distribuyen</h2>
+      <div class="numeros">
+        <div><div class="numero">{n_area}</div><div class="etiqueta">skills de área</div></div>
+        <div><div class="numero">{n_caso}</div><div class="etiqueta">skills de caso, privadas</div></div>
+      </div>
+      {nota_mercado}
+    </div>
   </div>
 
   <footer>
@@ -365,6 +560,10 @@ def main():
         "hw": hardware(),
         "ingesta": ingesta(),
         "pendientes": pendientes(),
+        "carpetas": carpetas(),
+        "sueltas": carpetas_sueltas(),
+        "skills": skills_locales(),
+        "marketplace": marketplace(),
     }
 
     SALIDA.write_text(html(datos), encoding="utf-8")

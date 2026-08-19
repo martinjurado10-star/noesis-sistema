@@ -11,3 +11,7 @@ panel.html
 
 # Herramientas de terceros que se descargan: no se versionan.
 _herramientas/
+
+# Basura de Python, se regenera sola.
+__pycache__/
+*.pyc

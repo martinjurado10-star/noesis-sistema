@@ -3,7 +3,7 @@
 Este archivo es **la fuente única** de cómo está armada esta computadora: qué hay
 instalado, por qué, y qué está prohibido. Si algo se instala, se declara acá primero.
 
-Última revisión: **2026-08-17**
+Última revisión: **2026-08-18**
 
 ---
 
@@ -189,7 +189,6 @@ del día sin dueño y el diseño miente.**
 
 | Qué | Por qué |
 |---|---|
-| Microsoft 365 (Word, Excel) | capa de documentos — la cubre Google |
 | OneDrive | capa de documentos — la cubre Drive |
 | Copilot | duplica a Claude |
 | WSL / Linux | segundo sistema; no acelera nada de lo que se hace acá |
@@ -199,10 +198,8 @@ del día sin dueño y el diseño miente.**
 | iLovePDF, CamScanner y similares | **lo hace la propia máquina** desde el 2026-08-17 |
 | Un segundo intérprete de Python | fuente de "¿con cuál corre esto?" |
 
-**Sobre Office, con dato:** en toda la máquina hay **cero archivos con macros** (`.xlsm`,
-`.docm`) y cero bases Access — medido el 2026-08-17. Es lo único que Google Sheets no
-ejecuta. Sin eso, Office no aporta nada: lo que le mandan a MJM en Word o Excel lo abre
-desde Drive igual.
+Office **no** está en esta tabla — dejó de estarlo el 2026-08-18: ver "La regla
+operativa" más arriba, que es donde vive la decisión y el porqué.
 
 Lo de iLovePDF y CamScanner es lo más importante de esa tabla: no son programas
 instalados, son **hábitos**. Convertir, escanear y sacar texto ya lo hace `10_ingesta`
@@ -244,6 +241,7 @@ Y al revés: redactar un escrito sobre un expediente es de Cowork, no de acá.
 | Carpeta | Qué gobierna |
 |---|---|
 | `C:\Noesis\00_sistema` | **este diseño** y la instalación de todo |
+| `C:\Noesis\00_sistema\claude_config` | el respaldo versionado de `~/.claude` — qué y por qué, en su `LEEME.md` |
 | `C:\Noesis\_contexto` | perfil de MJM y manual de uso |
 | `C:\Noesis\01_cerebro` | las skills, versionadas en git |
 | `C:\Noesis\10_ingesta` | la conversión automática a Markdown |
@@ -292,6 +290,8 @@ Start-Process powershell -Verb RunAs -ArgumentList '-ExecutionPolicy','Bypass','
 | 2026-08-17 | Zed como editor | hacía falta editor; VS Code es Microsoft |
 | 2026-08-17 | Fuera también: Notion y TeamViewer | duplicaba notas / acceso remoto sin uso |
 | 2026-08-18 | `10_ingesta` con repo propio (`noesis-ingesta`) | un repo por componente: un solo dueño, y `C:\Noesis` tiene adentro enlaces a papeles de clientes |
+| 2026-08-18 | Office de escritorio vuelve a estar permitido; sale de Prohibidos | el problema nunca fue Word, fue OneDrive — que sigue bloqueado |
+| 2026-08-18 | `~/.claude` respaldada en `claude_config\` (sólo `settings.json` y `CLAUDE.md`) | el resto es cache que se regenera o transcripciones con nombres de clientes que P10 prohíbe versionar |
 
 ---
 
@@ -358,10 +358,9 @@ OCR no se comio nada.
   `G:\...\01_Casos_Activos`, con distinta cantidad de archivos y distinta fecha en cada
   lado. Cotejar una por una, empezando por la más chica. El detalle con nombres está
   fuera del repo, en `_local_pendientes.md` (excluido por `.gitignore`).
-- **Desinstalar Adobe Creative Cloud y TeamViewer.** Son los dos que quedan. Correr de
-  nuevo `terminar_sistema.ps1` como administrador: los pasos ya hechos se saltean solos.
-  **Adobe abre su propia ventana y hay que apretar "Desinstalar" ahí** — no tiene modo
-  silencioso.
+- ~~Desinstalar Adobe Creative Cloud y TeamViewer~~ — **resuelto.** `INVENTARIO.md`
+  confirmó el 2026-08-18 que ya no están: cero coincidencias contra la tabla de
+  Prohibidos.
 - ~~Dar de baja la suscripción de Microsoft 365~~ — **no hay nada que hacer.** Verificado
   el 2026-08-17: la facturación periódica ya estaba desactivada. Está pagada hasta el
   16 de abril de 2027 y ahí se apaga sola. **No activar la renovación** aunque Microsoft
@@ -370,3 +369,11 @@ OCR no se comio nada.
   la exige.
 - Circuitos viejos de conversión sin jubilar: `99_experimentos\marker_pdfs` y
   `Downloads\Noesis`.
+- ~~7 carpetas vacías y sin dueño en `C:\Noesis`~~ — **resuelto el 2026-08-18.** El panel
+  las detectó (sección "Mapa de carpetas") comparando el disco contra esta tabla:
+  `00_inbox`, `05_audio`, `10_fuentes_md`, `20_fichas`, `30_patrones`, `99_procesados`,
+  `_logs`. Ninguna estaba vigilada por `10_ingesta\noesis_ingesta.py` ni referenciada en
+  ningún código — eran resto del diseño viejo por carpetas, ya reemplazado por "las
+  etapas son estados, no carpetas". MJM decidió borrar las siete en vez de declararlas.
+  Si el circuito de audio llega a necesitar una carpeta propia, se crea entonces, con
+  dueño declarado desde el día uno.
