@@ -151,6 +151,16 @@ disco pero no en GitHub** — el mismo riesgo que la regla 8 ya encontró en
 `10_ingesta`. Acá, en `00_sistema`, no hay datos de cliente en juego (P10 ya lo
 garantiza con el chequeo del primer paso), así que no hace falta ese freno.
 
+**Corolario, sumado el 2026-08-19:** cierre sin reescritura de HANDOFF es cierre incompleto. El commit no se considera cerrado hasta que el HANDOFF lo refleje.
+
+**Por qué.** El cierre que terminó en el commit `36a79ae` no reescribió este
+archivo. Dos sesiones después no tenían forma de saber que ese trabajo ya estaba
+hecho, y llegaron dos órdenes —"commitear `modelos\`" y "ratificar `modelos\` en
+`MEICL-v2.md`"— pidiendo repetir algo que el disco ya tenía resuelto. Se
+detectaron a tiempo porque la regla 16 ya estaba en juego, pero el costo de origen
+es este: un cierre que no deja el HANDOFF al día obliga a la sesión siguiente a
+redactar contra una foto vieja.
+
 ## 11. El handoff también viaja a donde se idea
 
 Para pensar comandos de `00_sistema` sin estar en Code, el lugar es un **proyecto
@@ -420,6 +430,23 @@ traía rutas exactas ni criterio de validación— habría rebotado en dos líne
 existirían ni el Post-Mortem ni `modelos\`. El Modo Piloto y el mapeo de disco no son
 concesiones a la regla: son la mitad del rol que la hace utilizable.
 
+## 16. Verificar antes de ejecutar — el criterio de éxito ya viene escrito
+
+**Toda orden arranca en Modo Piloto verificando su propio criterio de éxito contra el disco. Si ya se cumple, se reporta y no se ejecuta.**
+
+Es determinístico —el criterio de éxito ya viene escrito en la orden, no hay que
+inventar cómo comprobarlo— y es barato: casi siempre un `grep` o un `git log`
+alcanzan.
+
+**Por qué está escrita.** El 2026-08-19 llegaron dos órdenes seguidas —commitear
+`modelos\` y ratificar `modelos\` en `MEICL-v2.md`— para trabajo que un commit
+anterior (`36a79ae`) ya había hecho. La corrección obvia parecía pedirle a la mesa
+que revisara el disco antes de redactar la siguiente orden, pero la mesa no ve el
+disco: trabaja sobre el `HANDOFF.md`, y si el `HANDOFF.md` miente, la mesa siempre
+va a redactar contra la foto vieja. El que sí ve el disco es Code, en Modo Piloto,
+en el primer paso de cada orden —antes de tocar nada—. La causa de por qué el
+`HANDOFF.md` mentía queda en el corolario de la regla 10.
+
 ---
 
 ## Cómo se suma una regla
@@ -429,4 +456,5 @@ sesión que hubo que rehacer. No se agregan buenas intenciones. Formato: qué se
 hace, y abajo **por qué** — el por qué es lo que evita que alguien la deshaga
 dentro de seis meses.
 
-_Última regla sumada: 2026-08-19 (regla 15: compuerta de ejecución — Code no idea, ejecuta)._
+_Última regla sumada: 2026-08-19 (regla 16: verificar antes de ejecutar — el criterio
+de éxito ya viene escrito)._
