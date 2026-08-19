@@ -137,6 +137,11 @@ en este orden:** verificar anonimato (regla 7) → **commitear y hacer `git push
 sin que haga falta pedirlo** → informar el costo (regla 6) → sumar la regla
 nueva si la hubo → reescribir este archivo y entregarlo por chat (regla 11).
 
+**El atajo, desde el 2026-08-19: `/cerrar`.** Comando de usuario
+(`~/.claude/commands/cerrar.md`, respaldado en `claude_config\commands\`) que dispara
+siempre el mismo texto de estos cinco pasos, en el mismo orden — así el cierre no
+depende de que el modelo interprete igual la palabra suelta "cerrá" cada vez.
+
 **Por qué el push es automático y no a pedido.** La conexión a GitHub no es
 "de la sesión de chat": la tiene la máquina, vía Git Credential Manager, y
 sigue andando igual en cualquier sesión nueva — verificado el 2026-08-18 con
