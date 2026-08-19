@@ -132,6 +132,20 @@ sesiones del día para poder cerrarla. Salió bien, pero se pagó dos veces: una
 hacer el trabajo y otra al averiguar qué se había hecho. **Escribirlo cuesta una
 vez; reconstruirlo, cada vez.**
 
+**El cierre completo, decidido el 2026-08-18, es un solo gesto de cinco pasos y
+en este orden:** verificar anonimato (regla 7) → **commitear y hacer `git push`
+sin que haga falta pedirlo** → informar el costo (regla 6) → sumar la regla
+nueva si la hubo → reescribir este archivo y entregarlo por chat (regla 11).
+
+**Por qué el push es automático y no a pedido.** La conexión a GitHub no es
+"de la sesión de chat": la tiene la máquina, vía Git Credential Manager, y
+sigue andando igual en cualquier sesión nueva — verificado el 2026-08-18 con
+un push real. Lo único que fallaba era que Claude sólo commitea cuando se lo
+piden, y una sesión que termina sin que nadie lo pida deja el trabajo **en el
+disco pero no en GitHub** — el mismo riesgo que la regla 8 ya encontró en
+`10_ingesta`. Acá, en `00_sistema`, no hay datos de cliente en juego (P10 ya lo
+garantiza con el chequeo del primer paso), así que no hace falta ese freno.
+
 ## 11. El handoff también viaja a donde se idea
 
 Para pensar comandos de `00_sistema` sin estar en Code, el lugar es un **proyecto
