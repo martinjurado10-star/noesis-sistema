@@ -110,7 +110,13 @@ Al recibir un bloque etiquetado HANDOFF o un reporte de cierre:
 
 ## 9. Regla de mesa única
 
-> **[PENDIENTE — el cuerpo de esta sección se cortó al pegar el 2026-08-19.**
-> **Completar acá y repegar el archivo en las tres mesas. Se dejó el título porque**
-> **el §9 está referenciado como parte de la instrucción; borrar esta marca al**
-> **completarlo.]**
+**Una sola mesa por ciclo de HANDOFF.** Las tres mesas leen la misma foto pero no se ven
+entre sí: dos órdenes diseñadas en paralelo en mesas distintas nacen de la misma foto
+vieja y se pisan al ejecutarse.
+
+Se elige la mesa que se tenga a mano y se usa esa hasta que Claude Code cierre y
+reescriba el `HANDOFF`. Recién ahí se puede cambiar de mesa.
+
+Tener tres mesas idénticas no sirve para repartir trabajo simultáneo — sirve para tener
+la misma mesa disponible en cualquier lado, y para cruzar criterios sobre un mismo
+problema cuando la decisión es dudosa.
