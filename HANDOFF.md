@@ -47,6 +47,11 @@ faltaban dos: `modelos\` y el ritual de destilación. Se hicieron esas dos.
 
 La capa web sigue como estaba: **falta un clic de MJM por cada extensión de Chrome** (§4).
 
+**Y se completó `MESA_DISENO.md` §9** (bloque D), que había quedado con el cuerpo cortado
+al pegar. La mesa fijó el texto en su propia sesión (claude.ai) y esta sesión sólo
+aplicó y commiteó — separación de roles del §3 de ese mismo archivo: la mesa no toca la
+máquina, Code no redacta doctrina.
+
 ---
 
 ## 2. Qué se hizo en esta jornada
@@ -145,6 +150,24 @@ Lo que efectivamente se escribió:
   escrito: **el contenido se redacta primero en el scratchpad y después se copia**, así un
   bloqueo cuesta un `cp` y no volver a redactar.
 
+### Bloque D — Primer ciclo completo Mesa → Code (misma sesión)
+
+- **`MESA_DISENO.md` §9 completado.** El archivo dueño (`C:\Noesis\00_sistema`) tenía el
+  §9 cortado desde que se pegó ayer (5.071 bytes, marca `[PENDIENTE]`); la copia de
+  claude.ai sí tenía el texto entero. La mesa fijó el texto, emitió la orden con objetivo
+  + alcance + criterio de éxito, y esta sesión la ejecutó sin redactar de nuevo:
+  reemplazo literal, `grep -c PENDIENTE` → `0`, `git diff` tocó sólo esas seis líneas,
+  commit `bb75ac4` en `noesis-sistema`, push limpio. **Falta un paso, de MJM:** repegar
+  el archivo completo (ya sin la marca) en las mesas de Gemini y GPT, que probablemente
+  arrastran el mismo corte.
+- **La compuerta de tema (regla 2/`tema_sesion.py`) filtró correctamente una orden ajena.**
+  La mesa emitió también la orden de commitear `modelos\` en `01_cerebro` — bien formada,
+  con las tres condiciones del §5 de `MESA_DISENO.md` cerradas. Se frenó **antes de
+  tocar nada**, porque la carpeta abierta era `00_sistema` y esa orden es de otro repo y
+  otro tema (ya estaba anotado en el §4.1 de este mismo archivo). Se le devolvió a MJM el
+  comando exacto (`cd C:\Noesis\01_cerebro`) para pegarla en la sesión correcta. **Sigue
+  pendiente, con la orden ya redactada y lista para pegar** — ver §4.1.
+
 ---
 
 ## 3. Estado real de la estructura
@@ -170,7 +193,7 @@ prefijo `caso-`: fuera de git por patrón, no participa de esto y no se nombra a
 
 | Carpeta | Repo en GitHub (privado) | Estado al cierre |
 |---|---|---|
-| `C:\Noesis\00_sistema` | `noesis-sistema` | sincronizado este cierre |
+| `C:\Noesis\00_sistema` | `noesis-sistema` | sincronizado este cierre (commit `bb75ac4`) |
 | `C:\Noesis\00_nucleo` | `noesis` | sin tocar en esta jornada |
 | `C:\Noesis\01_cerebro` | `noesis-legal` | **tocado y SIN commitear — ver §4.1** |
 | `C:\Noesis\10_ingesta` | `noesis-ingesta` | sincronizado en el bloque A |
@@ -202,8 +225,11 @@ El `CLAUDE.md` global con la sección Dual-Track ya quedó respaldado en esta se
 
 1. **Commitear `01_cerebro`** (`noesis-legal`): las tres carpetas `modelos\` con sus
    `LEEME.md`. No se hizo acá porque es otro repo y otro tema (regla 1: una sesión, un
-   tema). Verificar anonimato primero — los tres `LEEME.md` no nombran ningún caso, pero
-   se chequea igual (regla 7).
+   tema). **La orden ya está redactada por la mesa y lista para pegar** (bloque D):
+   objetivo, alcance (las tres carpetas `modelos\`), criterio de éxito (`git status -sb`
+   limpio, `git log -1` con las tres carpetas, grep de nombres de caso/cliente vacío en
+   los tres `LEEME.md`) y restricción de no mezclar con el pendiente 2. Sólo falta abrir
+   Code en `C:\Noesis\01_cerebro` y pegarla.
 2. **Ratificar `modelos\` en `MEICL-v2.md`.** Hoy la forma del archivo (frontmatter de
    madurez, variables `{{ASI}}`) vive en `skills\concursos-ar\modelos\LEEME.md`, que hace
    de referencia provisoria. Su dueño definitivo es el estándar (regla 3). Sesión de
@@ -298,4 +324,5 @@ Al cerrar, el cierre de cinco pasos que es uno solo (regla 10): verificar anonim
 (`python costo.py`) → sumar a `PROTOCOLO.md` la regla que haya dejado la sesión →
 **reescribir este archivo** y entregarlo por chat como adjunto (regla 11).
 
-_Escrito el 2026-08-19 al cierre de la sesión que instaló el modelo Dual-Track._
+_Escrito el 2026-08-19. Cierre de la sesión que instaló el modelo Dual-Track (bloques A-C)
+y corrió el primer ciclo completo Mesa → Code sobre `MESA_DISENO.md` §9 (bloque D)._
