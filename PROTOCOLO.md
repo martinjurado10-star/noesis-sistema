@@ -181,6 +181,20 @@ comando que sirve se trae de vuelta y se corre acá, contra el disco real.
 Escribirlo es del cierre, junto con el costo (regla 6) y la regla nueva si la
 hubo. Los tres pasos son uno solo y van en ese orden.
 
+## 12. Lo que se usa seguido va al Escritorio, no a una carpeta técnica
+
+Una herramienta de uso diario (convertir a texto para la IA, por ejemplo)
+necesita un clic, no memorizar una ruta. El archivo vive donde tiene que
+vivir por dueño (`10_ingesta\PREPARAR PARA IA.bat`, regla 3) — el acceso
+directo va al Escritorio, con el mismo nombre en lenguaje simple, para que
+cualquiera lo reconozca sin explicación.
+
+**Por qué está escrita.** El 2026-08-18 MJM no sabía cómo convertir un
+archivo a mano y pidió una manera visual de hacerlo — y el acceso directo
+`PREPARAR PARA IA.lnk` ya estaba en su Escritorio desde antes, apuntando bien.
+El problema no era que faltara la herramienta: era que no se veía. **Antes de
+construir algo nuevo, revisar el Escritorio.**
+
 ---
 
 ## Reglas técnicas ganadas a golpes
@@ -202,6 +216,11 @@ hubo. Los tres pasos son uno solo y van en ese orden.
 - **La credencial la pone MJM.** Claude no se autentica en cuentas ajenas ni con
   autorización expresa. Cuando algo pide una llave, Claude deja todo preparado
   hasta la puerta y da el camino más corto — el clic es de MJM.
+- **Git Bash convierte `/c` en `C:/`.** Al registrar un comando que lleva `cmd /c`
+  (un servidor MCP, por ejemplo), anteponer `MSYS_NO_PATHCONV=1` y verificar el
+  resultado (`claude mcp list`). Costó un registro roto el 2026-08-19. Y el
+  nombre del binario se verifica en la carpeta de npm, no se adivina: el paquete
+  `@playwright/mcp` instala `playwright-mcp`, no `mcp-server-playwright`.
 
 ---
 
@@ -212,4 +231,4 @@ sesión que hubo que rehacer. No se agregan buenas intenciones. Formato: qué se
 hace, y abajo **por qué** — el por qué es lo que evita que alguien la deshaga
 dentro de seis meses.
 
-_Última regla sumada: 2026-08-18 (regla 11: el handoff también viaja a donde se idea)._
+_Última regla sumada: 2026-08-18 (regla 12: lo que se usa seguido va al Escritorio)._

@@ -1,6 +1,6 @@
 {
   "_comentario": "Fuente unica del ecosistema completo. La leen panel.py, instalar.ps1 e inventario.ps1. El por que de cada linea esta en SISTEMA.md.",
-  "revision": "2026-08-18",
+  "revision": "2026-08-19",
 
   "_sobre_las_tres_listas": "PROGRAMAS se instalan con un comando y se verifican solos. LOCAL son piezas puestas a mano o construidas acá: se verifican por ruta. SERVICIOS viven en la nube: no se instalan ni se verifican, se declaran para que ninguna funcion quede sin dueño.",
 
@@ -41,6 +41,15 @@
     { "funcion": "Material para NotebookLM", "nombre": "para_notebooklm",
       "ruta": "C:\\Noesis\\10_ingesta\\para_notebooklm.py",
       "nota": "Une los .md en uno solo. El limite de NotebookLM no es el tamaño (500.000 palabras por fuente) sino la cantidad: 50 fuentes por notebook. Comprimir en zip no sirve: no descomprime." },
+    { "funcion": "Web a texto",             "nombre": "web_a_md.py",
+      "ruta": "C:\\Noesis\\10_ingesta\\web_a_md.py",
+      "nota": "Hermano de la ingesta: URL o .html capturado (SingleFile) -> .md limpio con fecha de captura. Motor: trafilatura (pip, Python 3.12)." },
+    { "funcion": "Navegacion web por Claude", "nombre": "playwright-mcp",
+      "ruta": "%APPDATA%\\npm\\playwright-mcp.cmd",
+      "nota": "Servidor MCP registrado en la config de usuario de Claude Code (verificar con: claude mcp list). Maneja el Chrome ya instalado, bajo demanda; apagado no gasta RAM. Puesto el 2026-08-19." },
+    { "funcion": "Chrome manejable (puente)", "nombre": "chrome_debug.bat",
+      "ruta": "C:\\Noesis\\00_sistema\\chrome_debug.bat",
+      "nota": "Abre Chrome visible con depuracion en el puerto 9222, perfil aparte en %LOCALAPPDATA%\\Noesis\\chrome_debug. Acceso directo CHROME PARA CLAUDE en el Escritorio." },
     { "_nota_capas": "Aca NO van las skills juridicas (liquidar-ar, concursos-ar, revision-contratos-ar). Son Capa 2 -dominio-, viven en 01_cerebro y tienen su propio repo. Declararlas aca mezclaria capas y les daria un segundo dueño." }
   ],
 

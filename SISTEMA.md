@@ -169,6 +169,9 @@ que justifican tener este repositorio.**
 | Motor de OCR de Marker | `llama-server` — sin esto Marker no hace OCR |
 | Castellano del OCR | `spa.traineddata` — sin esto Tesseract lee como si fuera inglés |
 | Papeles a texto | Ingesta NOÉSIS (`10_ingesta`) |
+| Web a texto | `web_a_md.py` (`10_ingesta`) — motor: trafilatura |
+| Navegación web por Claude | `playwright-mcp` (MCP, npm global) |
+| Chrome manejable (puente) | `chrome_debug.bat` (`00_sistema`) |
 | Liquidaciones | Motor de `liquidar-ar` |
 
 ### 3. Servicios — viven en la nube, no se instalan
