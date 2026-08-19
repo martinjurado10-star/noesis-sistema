@@ -15,3 +15,7 @@ _herramientas/
 # Basura de Python, se regenera sola.
 __pycache__/
 *.pyc
+
+# Temporales de Office: aparecen mientras un .md o .docx esta abierto
+# en Word y desaparecen al cerrarlo. Nunca se versionan.
+~$*
